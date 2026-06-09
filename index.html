@@ -5,61 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Progetto Autentico - Francesco A. Caruso</title>
     <style>
-        /* --- PROPRIETÀ BASE E VARIABILI DI SQUISHY --- */
+        /* --- PROPRIETÀ BASE E VARIABILI DI SQUISHY / INDUSTRIAL TECH --- */
         :root {
-            --squishy-transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --btn-gradient: linear-gradient(135deg, #0071e3, #34aadc);
+            --squishy-transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --btn-gradient: linear-gradient(135deg, #2c3e50, #3498db);
+            --accent-glow: linear-gradient(90deg, #3498db, #2ecc71);
+            --coffee-gradient: linear-gradient(135deg, #ffdd00, #f39c12);
+            --border-radius-tech: 16px;
+            --border-radius-btn: 12px;
         }
 
         /* --- CONFIGURAZIONE TEMA LIGHT (AUTOMATICO) --- */
         @media (prefers-color-scheme: light) {
             :root {
-                --body-bg: #f5f5f7;
-                --glass-bg: rgba(255, 255, 255, 0.45);
-                --glass-media-bg: rgba(255, 255, 255, 0.25);
-                --glass-border: rgba(255, 255, 255, 0.6);
-                --glass-highlight: rgba(255, 255, 255, 0.8);
-                --text-main: #1d1d1f;
-                --text-secondary: #515154;
-                --liquid-shadow: 0 25px 60px rgba(0, 0, 0, 0.06), 
-                                 inset 0 1px 0 var(--glass-highlight),
-                                 inset 0 -3px 15px rgba(255,255,255,0.4);
-                --media-shadow: 0 15px 35px rgba(0, 0, 0, 0.08),
-                                inset 0 1px 2px rgba(255,255,255,0.6);
-                --orb-opacity: 0.5;
+                --body-bg: #f4f5f8;
+                --glass-bg: rgba(240, 242, 245, 0.65);
+                --glass-media-bg: rgba(255, 255, 255, 0.4);
+                --glass-border: rgba(180, 190, 200, 0.5);
+                --input-bg: rgba(255, 255, 255, 0.8);
+                --text-main: #2c3e50;
+                --text-secondary: #607d8b;
+                --liquid-shadow: 0 20px 50px rgba(0, 0, 0, 0.05), 
+                                 inset 0 1px 0 rgba(255,255,255,0.8);
+                --media-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+                --orb-opacity: 0.4;
                 --orb-blend: multiply;
-                --color-orb-1: #7cdff3;
-                --color-orb-2: #fbc2eb;
-                --color-orb-3: #ffeba1;
-                --color-orb-4: #a8ffb2;
-                --footer-bg: rgba(255, 255, 255, 0.6);
-                --footer-text: #6e6e73;
+                --color-orb-1: #a1c4fd;
+                --color-orb-2: #c2e9fb;
+                --footer-bg: rgba(240, 242, 245, 0.8);
+                --footer-text: #78909c;
             }
         }
 
         /* --- CONFIGURAZIONE TEMA DARK (AUTOMATICO) --- */
         @media (prefers-color-scheme: dark) {
             :root {
-                --body-bg: #0c0d14;
-                --glass-bg: rgba(30, 30, 35, 0.45);
-                --glass-media-bg: rgba(20, 20, 25, 0.25);
-                --glass-border: rgba(255, 255, 255, 0.15);
-                --glass-highlight: rgba(255, 255, 255, 0.2);
-                --text-main: #f5f5f7;
-                --text-secondary: #86868b;
-                --liquid-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 
-                                 inset 0 1px 0 var(--glass-highlight),
-                                 inset 0 -3px 15px rgba(255,255,255,0.05);
-                --media-shadow: 0 15px 35px rgba(0, 0, 0, 0.5),
-                                inset 0 1px 1px rgba(255,255,255,0.1);
-                --orb-opacity: 0.45;
+                --body-bg: #0b0c10;
+                --glass-bg: rgba(20, 24, 33, 0.65);
+                --glass-media-bg: rgba(15, 18, 26, 0.4);
+                --glass-border: rgba(255, 255, 255, 0.1);
+                --input-bg: rgba(10, 12, 18, 0.6);
+                --text-main: #e2e8f0;
+                --text-secondary: #94a3b8;
+                --liquid-shadow: 0 25px 60px rgba(0, 0, 0, 0.45), 
+                                 inset 0 1px 0 rgba(255,255,255,0.05);
+                --media-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+                --orb-opacity: 0.35;
                 --orb-blend: screen;
-                --color-orb-1: #00f2fe;
-                --color-orb-2: #a18cd1;
-                --color-orb-3: #ff0844;
-                --color-orb-4: #00ff87;
-                --footer-bg: rgba(12, 13, 20, 0.8);
-                --footer-text: #86868b;
+                --color-orb-1: #1f4068;
+                --color-orb-2: #162447;
+                --footer-bg: rgba(11, 12, 16, 0.85);
+                --footer-text: #64748b;
             }
         }
 
@@ -83,7 +79,32 @@
             transition: background-color 0.5s ease;
         }
 
-        /* --- SFONDO INTERATTIVO APPLE ART --- */
+        /* --- PRIVACY WALL (BANNER D'ACCESSO) --- */
+        #privacy-wall {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--body-bg);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .wall-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: var(--border-radius-tech);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--liquid-shadow);
+        }
+
+        /* --- SFONDO GRAFICO AMBIENTALE --- */
         .apple-art-bg {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -95,97 +116,78 @@
         .orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(90px);
+            filter: blur(120px);
             mix-blend-mode: var(--orb-blend);
             opacity: var(--orb-opacity);
-            animation: floatAppleArt 22s infinite ease-in-out;
+            animation: floatAmbient 25s infinite ease-in-out;
             transition: background 0.8s ease, opacity 0.8s ease;
         }
 
         .orb-1 {
-            width: 650px; height: 650px;
-            background: radial-gradient(circle, var(--color-orb-1) 0%, transparent 70%);
-            top: -15%; left: -10%;
-            animation-duration: 18s;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, var(--color-orb-1) 0%, transparent 75%);
+            top: -20%; left: -10%;
         }
 
         .orb-2 {
-            width: 750px; height: 750px;
-            background: radial-gradient(circle, var(--color-orb-2) 0%, transparent 70%);
-            bottom: -20%; right: -10%;
-            animation-duration: 26s;
-            animation-delay: -5s;
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, var(--color-orb-2) 0%, transparent 75%);
+            bottom: -25%; right: -10%;
+            animation-delay: -7s;
         }
 
-        .orb-3 {
-            width: 550px; height: 550px;
-            background: radial-gradient(circle, var(--color-orb-3) 0%, transparent 70%);
-            top: 35%; left: 45%;
-            animation-duration: 22s;
-            animation-delay: -11s;
+        @keyframes floatAmbient {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, -40px) scale(1.05); }
+            100% { transform: translate(0, 0) scale(1); }
         }
 
-        .orb-4 {
-            width: 480px; height: 480px;
-            background: radial-gradient(circle, var(--color-orb-4) 0%, transparent 70%);
-            bottom: 25%; left: -5%;
-            animation-duration: 16s;
-            animation-delay: -3s;
-        }
-
-        @keyframes floatAppleArt {
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            33% { transform: translate(60px, -50px) scale(1.1) rotate(120deg); }
-            66% { transform: translate(-40px, 40px) scale(0.95) rotate(240deg); }
-            100% { transform: translate(0, 0) scale(1) rotate(360deg); }
-        }
-
-        /* --- BARRA DI NAVIGAZIONE --- */
+        /* --- BARRA DI NAVIGAZIONE INDUSTRIALE --- */
         header {
-            width: 90%;
-            max-width: 720px;
+            width: 92%;
+            max-width: 850px;
             background: var(--glass-bg);
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             position: fixed;
             top: 25px;
             z-index: 1000;
             border: 1px solid var(--glass-border);
-            border-radius: 35px;
+            border-radius: var(--border-radius-tech);
             box-shadow: var(--liquid-shadow);
             display: flex;
             justify-content: center;
-            transition: var(--squishy-transition), background 0.5s ease, border 0.5s ease;
+            transition: var(--squishy-transition);
         }
 
-        header:hover {
-            transform: translateY(2px) scale(0.99);
-        }
+        header:hover { transform: translateY(1px); }
 
         .nav-container {
-            width: 95%;
+            width: 96%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
+            padding: 10px 0;
         }
 
         .logo {
-            font-size: 19px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+            font-size: 17px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             color: var(--text-main);
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding-left: 12px;
+            gap: 10px;
+            padding-left: 10px;
         }
 
         .logo-dot {
-            width: 10px;
-            height: 10px;
-            background: var(--btn-gradient);
-            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-glow);
+            border-radius: 2px;
+            transform: rotate(45deg);
         }
 
         nav ul {
@@ -193,16 +195,16 @@
             display: flex;
             margin: 0;
             padding: 0;
-            gap: 4px;
+            gap: 2px;
         }
 
         nav ul li a {
             text-decoration: none;
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
-            padding: 10px 18px;
-            border-radius: 25px;
+            padding: 10px 16px;
+            border-radius: calc(var(--border-radius-tech) - 4px);
             transition: var(--squishy-transition);
             cursor: pointer;
             display: flex;
@@ -212,22 +214,21 @@
 
         nav ul li a:hover {
             color: var(--text-main);
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.08);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         nav ul li a.active {
-            background: rgba(255, 255, 255, 0.7);
-            color: #0071e3;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.5);
+            background: var(--input-bg);
+            color: var(--text-main);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid var(--glass-border);
         }
 
         /* --- CONTENITORE SCHEDE --- */
         main {
-            margin-top: 140px;
+            margin-top: 150px;
             width: 90%;
-            max-width: 800px;
+            max-width: 850px;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -238,57 +239,164 @@
         .tab-content {
             display: none;
             background: var(--glass-bg);
-            padding: 45px;
-            border-radius: 32px;
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
+            padding: 40px;
+            border-radius: var(--border-radius-tech);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--glass-border);
             box-shadow: var(--liquid-shadow);
-            position: relative;
-            transition: background 0.5s ease, border 0.5s ease;
-        }
-
-        .tab-content::before {
-            content: "";
-            position: absolute;
-            top: 1px; left: 4%; width: 92%; height: 30px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
-            border-radius: 32px;
-            pointer-events: none;
         }
 
         .tab-content.active {
             display: block;
-            animation: squishyReveal 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+            animation: techReveal 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        @keyframes squishyReveal {
-            0% { opacity: 0; transform: scale(0.92) translateY(35px); }
-            65% { transform: scale(1.02) translateY(-4px); }
+        @keyframes techReveal {
+            0% { opacity: 0; transform: scale(0.98) translateY(15px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         h1 {
-            font-size: 42px;
-            font-weight: 800;
-            letter-spacing: -1.5px;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.8px;
             margin-top: 0;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: var(--text-main);
         }
 
         p {
-            font-size: 18px;
+            font-size: 16px;
             color: var(--text-secondary);
             line-height: 1.6;
+        }
+
+        /* --- STRUTTURA DEL FORM CONTATTI --- */
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            padding-left: 4px;
+        }
+
+        .form-group input, .form-group textarea {
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            padding: 14px 16px;
+            font-size: 15px;
+            font-family: inherit;
+            border-radius: var(--border-radius-btn);
+            outline: none;
+            transition: var(--squishy-transition);
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        /* Checkbox Custom */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 5px 2px;
+            user-select: none;
+        }
+
+        .checkbox-group input { display: none; }
+
+        .custom-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--glass-border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--squishy-transition);
+            background: var(--input-bg);
+        }
+
+        .checkbox-group input:checked + .custom-checkbox {
+            background: #3498db;
+            border-color: #3498db;
+        }
+
+        .custom-checkbox::after {
+            content: "";
+            width: 6px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            display: none;
+        }
+
+        .checkbox-group input:checked + .custom-checkbox::after { display: block; }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: var(--text-secondary);
             font-weight: 500;
         }
 
-        /* --- BOTTONI MULTI-SQUISHY --- */
+        /* --- SOTTO-SEZIONE SUPPORT (DONAZIONI SOFT) --- */
+        .support-box {
+            margin-top: 40px;
+            padding: 25px;
+            border-top: 1px dashed var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .support-text h3 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .support-text p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* --- BOTTONI E GRUPPI --- */
         .button-group {
             display: flex;
-            gap: 16px;
-            margin-top: 35px;
+            gap: 14px;
+            margin-top: 30px;
             flex-wrap: wrap;
         }
 
@@ -296,250 +404,225 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             background: var(--btn-gradient);
             color: white;
-            padding: 16px 32px;
-            border-radius: 26px;
+            padding: 14px 26px;
+            border-radius: var(--border-radius-btn);
             text-decoration: none;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: none;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0, 113, 227, 0.25),
-                        inset 0 2px 4px rgba(255,255,255,0.4);
+            box-shadow: 0 8px 20px rgba(44, 62, 80, 0.15);
             transition: var(--squishy-transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::after {
-            content: "";
-            position: absolute;
-            top: 0; left: -50%; width: 200%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
-            transform: skewX(-25deg);
-            transition: 0.8s;
         }
 
         .btn:hover {
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 18px 35px rgba(0, 113, 227, 0.4);
+            transform: scale(1.03) translateY(-2px);
+            box-shadow: 0 12px 24px rgba(52, 152, 219, 0.25);
         }
 
-        .btn:hover::after { left: 125%; }
-        .btn:active { transform: scale(0.86) translateY(3px); }
+        .btn:active { transform: scale(0.97) translateY(1px); }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.4);
+            background: var(--input-bg);
             color: var(--text-main);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+            box-shadow: none;
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.7);
-            color: #0071e3;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--text-main);
         }
 
-        /* --- CORNICI MEDIA IN VETRO TRASPARENTE --- */
+        .btn-coffee {
+            background: var(--coffee-gradient);
+            color: #1d1d1f;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.2);
+        }
+
+        .btn-coffee:hover {
+            box-shadow: 0 12px 24px rgba(243, 156, 18, 0.35);
+        }
+
         .media-container {
             position: relative;
             width: 100%;
-            border-radius: 28px;
+            border-radius: var(--border-radius-tech);
             overflow: hidden;
             background: var(--glass-media-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             box-shadow: var(--media-shadow);
-            margin: 35px 0;
-            transition: var(--squishy-transition), background 0.5s ease, border 0.5s ease;
-        }
-
-        .media-container::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            box-shadow: inset 0 12px 24px rgba(255, 255, 255, 0.15);
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .media-container:hover {
-            transform: scale(1.02) translateY(-2px);
-            background: rgba(255, 255, 255, 0.35);
+            margin: 25px 0;
         }
 
         .ratio-16-9 { padding-top: 56.25%; }
-        .ratio-a4 { padding-top: 125%; }
+        .ratio-a4 { padding-top: 130%; }
 
         .media-container iframe {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             border: none;
-            z-index: 2;
         }
 
-        /* --- FOOTER --- */
         footer {
             width: 100%;
             text-align: center;
-            padding: 35px 0;
-            font-size: 13px;
+            padding: 30px 0;
+            font-size: 12px;
             color: var(--footer-text);
             border-top: 1px solid var(--glass-border);
             background: var(--footer-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             margin-top: auto;
-            transition: background 0.5s ease, color 0.5s ease, border 0.5s ease;
         }
 
-        footer a {
-            color: #0071e3;
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--squishy-transition);
-            display: inline-block;
-        }
-
-        footer a:hover {
-            transform: scale(1.15);
-        }
-
-        .icon {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-        }
+        footer a { color: #3498db; text-decoration: none; font-weight: 600; }
+        .icon { width: 16px; height: 16px; fill: currentColor; }
     </style>
 </head>
 <body>
 
-    <!-- ARTE ASTRATTA STILE APPLE CAMALEONTICA -->
+    <!-- PRIVACY WALL -->
+    <div id="privacy-wall">
+        <div class="wall-content">
+            <div class="logo-dot" style="width: 20px; height: 20px; margin: 0 auto 20px;"></div>
+            <h2>Informativa sui Contenuti</h2>
+            <p>Il sito utilizza componenti integrate per la corretta visualizzazione dei moduli e dei documenti multimediali di terze parti.</p>
+            <button class="btn" onclick="acceptPrivacy()" style="margin-top: 20px; width: 100%;">Accetta e Procedi</button>
+        </div>
+    </div>
+
+    <!-- SFONDO AMBIENTALE -->
     <div class="apple-art-bg">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-        <div class="orb orb-4"></div>
     </div>
 
-    <!-- STRUTTURA DELLE ICONE -->
     <svg style="display: none;">
-        <symbol id="icon-home" viewBox="0 0 24 24">
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-        </symbol>
-        <symbol id="icon-video" viewBox="0 0 24 24">
-            <path d="M21 6h-7.59l3.29-3.29L16 2l-4 4-4-4-.71.71L10.59 6H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H3V8h18v12zM8 10l7 4-7 4z"/>
-        </symbol>
-        <symbol id="icon-powerpoint" viewBox="0 0 24 24">
-            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
-        </symbol>
-        <symbol id="icon-copione" viewBox="0 0 24 24">
-            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
-        </symbol>
-        <symbol id="icon-download" viewBox="0 0 24 24">
-            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
-        </symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></symbol>
+        <symbol id="icon-video" viewBox="0 0 24 24"><path d="M21 6h-7.59l3.29-3.29L16 2l-4 4-4-4-.71.71L10.59 6H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H3V8h18v12zM8 10l7 4-7 4z"/></symbol>
+        <symbol id="icon-powerpoint" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></symbol>
+        <symbol id="icon-copione" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></symbol>
+        <symbol id="icon-mail" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></symbol>
+        <symbol id="icon-send" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></symbol>
+        <symbol id="icon-coffee" viewBox="0 0 24 24"><path d="M2 21h18v-2H2v2zM20 8h-2V5h2v3zm0-5H4v13c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></symbol>
     </svg>
 
-    <!-- HEADER SQUISHY -->
+    <!-- HEADER -->
     <header>
         <div class="nav-container">
-            <div class="logo">
-                <div class="logo-dot"></div>
-                Progetto Autentico
-            </div>
+            <div class="logo"><div class="logo-dot"></div>Progetto Autentico</div>
             <nav>
                 <ul>
                     <li><a onclick="openTab('home')" id="link-home" class="active"><svg class="icon"><use href="#icon-home"/></svg>Home</a></li>
                     <li><a onclick="openTab('video')" id="link-video"><svg class="icon"><use href="#icon-video"/></svg>Video</a></li>
                     <li><a onclick="openTab('powerpoint')" id="link-powerpoint"><svg class="icon"><use href="#icon-powerpoint"/></svg>PowerPoint</a></li>
                     <li><a onclick="openTab('copione')" id="link-copione"><svg class="icon"><use href="#icon-copione"/></svg>Copione</a></li>
+                    <li><a onclick="openTab('contatti')" id="link-contatti"><svg class="icon"><use href="#icon-mail"/></svg>Contatti</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- CONTENUTI -->
+    <!-- SEZIONI -->
     <main>
-        
-        <!-- INTRODUZIONE -->
+        <!-- HOME -->
         <section id="home" class="tab-content active">
             <h1>Compito Autentico</h1>
-            <p>Salve, io mi chiamo Francesco A. Caruso e questa pagina web è interamente dedicata al mio Compito Autentico.</p>
-            <p>Naviga tra i vari elementi gelatinosi multimediali utilizzando i tasti morbidi che trovi qui sotto:</p>
-            
+            <p>Benvenuti. Questa piattaforma raccoglie ed organizza tutti i materiali relativi al mio Compito Autentico.</p>
             <div class="button-group">
-                <button class="btn" onclick="openTab('video')">
-                    <svg class="icon"><use href="#icon-video"/></svg>Guarda il Video
-                </button>
-                <button class="btn btn-secondary" onclick="openTab('powerpoint')">
-                    <svg class="icon"><use href="#icon-powerpoint"/></svg>Apri PowerPoint
-                </button>
-                <button class="btn btn-secondary" onclick="openTab('copione')">
-                    <svg class="icon"><use href="#icon-copione"/></svg>Leggi il Copione
-                </button>
+                <button class="btn" onclick="openTab('video')"><svg class="icon"><use href="#icon-video"/></svg>Apri il Video</button>
+                <button class="btn btn-secondary" onclick="openTab('powerpoint')"><svg class="icon"><use href="#icon-powerpoint"/></svg>Presentazione</button>
+                <button class="btn btn-secondary" onclick="openTab('contatti')"><svg class="icon"><use href="#icon-mail"/></svg>Scrivimi</button>
             </div>
         </section>
 
-        <!-- SEZIONE: VIDEO -->
+        <!-- VIDEO -->
         <section id="video" class="tab-content">
-            <h1>Il Video del Progetto</h1>
-            <p>Visiona il contenuto video integrato nella vetratura liquida tramite YouTube, oppure scaricalo direttamente sul tuo Cloud.</p>
-            
+            <h1>Video del Progetto</h1>
             <div class="media-container ratio-16-9">
                 <iframe src="https://www.youtube.com/embed/LIw89Dn2Wh0" allowfullscreen></iframe>
             </div>
-            
-            <div class="button-group">
-                <a href="https://drive.google.com/drive/u/0/home" target="_blank" class="btn">
-                    <svg class="icon"><use href="#icon-download"/></svg>Scarica il Video da Google Drive
-                </a>
-            </div>
         </section>
 
-        <!-- SEZIONE: POWERPOINT -->
+        <!-- POWERPOINT -->
         <section id="powerpoint" class="tab-content">
-            <h1>Presentazione PowerPoint</h1>
-            <p>Sfoglia le diapositive Canva direttamente all'interno della goccia di vetro interattiva o avvia il download locale del file .pptx.</p>
-            
+            <h1>Presentazione delle Diapositive</h1>
             <div class="media-container ratio-16-9">
-                <!-- Link di Embed corretto e aggiornato della tua presentazione Canva -->
                 <iframe src="https://www.canva.com/design/DAHKNSf_bH0/pzAIoM7n_RsgoRp5Bmjl6g/view?embed" allowfullscreen></iframe>
             </div>
-            
-            <div class="button-group">
-                <a href="https://drive.google.com/file/d/1mr6TzeUL1gl80cYOzUZwlCozXcrSW9B3/view?usp=sharing" target="_blank" class="btn">
-                    <svg class="icon"><use href="#icon-download"/></svg>Scarica la Presentazione (.pptx)
-                </a>
-            </div>
         </section>
 
-        <!-- SEZIONE: COPIONE -->
+        <!-- COPIONE -->
         <section id="copione" class="tab-content">
-            <h1>Il Copione del Progetto</h1>
-            <p>Leggi il testo integrale direttamente dall'anteprima immersiva o scarica la copia digitale sul tuo dispositivo.</p>
-            
+            <h1>Copione del Progetto</h1>
             <div class="media-container ratio-a4">
-                <!-- Link per visualizzare l'anteprima corretta del PDF caricato su Google Drive -->
-                <iframe src="https://drive.google.com/file/d/1mr6TzeUL1gl80cYOzUZwlCozXcrSW9B3/preview"></iframe>
+                <iframe src="https://docs.google.com/viewer?url=https://drive.google.com/file/d/1H87bqyARRU9Sp3qGJCFzJYM3Zga0ObK0/view?usp=share_link&embedded=true"></iframe>
             </div>
-            
             <div class="button-group">
-                <a href="https://drive.google.com/file/d/1mr6TzeUL1gl80cYOzUZwlCozXcrSW9B3/view?usp=sharing" target="_blank" class="btn">
-                    <svg class="icon"><use href="#icon-download"/></svg>Scarica il Copione (PDF)
+                <a href="https://drive.google.com/file/d/INSERISCI_QUI_L_ID_DEL_SECONDO_FILE/view?usp=sharing" target="_blank" class="btn">
+                    <svg class="icon"><use href="#icon-copione"/></svg>Richiedi Accesso in Modifica
                 </a>
             </div>
         </section>
 
+        <!-- CONTATTI -->
+        <section id="contatti" class="tab-content">
+            <h1>Contattami</h1>
+            <p>Usa questo spazio per metterti in contatto con me. Compila i dettagli e scrivi il tuo messaggio.</p>
+            
+            <form class="contact-form" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" required placeholder="Inserisci il tuo nome">
+                </div>
+                <div class="form-group">
+                    <label for="cognome">Cognome</label>
+                    <input type="text" id="cognome" required placeholder="Inserisci il tuo cognome">
+                </div>
+                <div class="form-group full-width">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" required placeholder="esempio@dominio.com">
+                </div>
+                <div class="form-group full-width">
+                    <label for="messaggio">Messaggio</label>
+                    <textarea id="messaggio" required placeholder="Componi il tuo testo qui..."></textarea>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label class="checkbox-group">
+                        <input type="checkbox" id="invia-copia">
+                        <div class="custom-checkbox"></div>
+                        <span class="checkbox-label">Desidero ricevere una copia di questo messaggio via e-mail</span>
+                    </label>
+                </div>
+                
+                <div class="full-width" style="margin-top: 10px;">
+                    <button type="submit" class="btn">
+                        <svg class="icon"><use href="#icon-send"/></svg>Invia Messaggio
+                    </button>
+                </div>
+            </form>
+
+            <!-- SEZIONE DONAZIONE SOFT ED ELEGANTE -->
+            <div class="support-box">
+                <div class="support-text">
+                    <h3>Ti piace questo lavoro?</h3>
+                    <p>Se apprezzi lo sforzo ingegneristico dietro a questa piattaforma, puoi lasciare un piccolo supporto simbolico.</p>
+                </div>
+                <a href="#" target="_blank" class="btn btn-coffee">
+                    <svg class="icon"><use href="#icon-coffee"/></svg>Offrimi un caffè
+                </a>
+            </div>
+        </section>
     </main>
 
-    <!-- FOOTER ADATTIVO -->
+    <!-- FOOTER -->
     <footer>
         <div>
-            © 2026 Progetto Autentico di Francesco A. Caruso — Email di supporto: <a href="mailto:progettoautentico.francescocaruso@outlook.com">progettoautentico.francescocaruso@outlook.com</a>
+            © 2026 Progetto Autentico di Francesco A. Caruso — Supporta con un <a href="#" target="_blank">caffè</a> — Contatto: <a href="mailto:progettoautentico.francescocaruso@outlook.com">progettoautentico.francescocaruso@outlook.com</a>
         </div>
     </footer>
 
@@ -547,16 +630,28 @@
         function openTab(tabId) {
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => content.classList.remove('active'));
-
             const links = document.querySelectorAll('nav ul li a');
             links.forEach(link => link.classList.remove('active'));
-
             document.getElementById(tabId).classList.add('active');
             document.getElementById('link-' + tabId).classList.add('active');
-            
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
-    </script>
 
+        function acceptPrivacy() {
+            const wall = document.getElementById('privacy-wall');
+            wall.style.opacity = '0';
+            wall.style.transform = 'scale(1.02)';
+            setTimeout(() => wall.style.display = 'none', 500);
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const inviaCopia = document.getElementById('invia-copia').checked;
+            
+            alert(`Grazie ${nome}! Il tuo messaggio è stato preso in carico.${inviaCopia ? ' Ti verrà inviata una copia via e-mail.' : ''}`);
+            event.target.reset();
+        }
+    </script>
 </body>
 </html>
