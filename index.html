@@ -3,35 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Francesco A. Caruso - Technical Workspace</title>
+    <title>Workspace Didattico - Francesco A. Caruso</title>
     <style>
-        /* --- VARIABILI DI DESIGN: INDUSTRIAL TERMINAL --- */
+        /* --- CONFIGURAZIONE GRIGLIA E COLORI (BAUHAUS BLUEPRINT) --- */
         :root {
-            --bg-grid: #0f1115;
-            --grid-color: rgba(52, 152, 219, 0.04);
-            --panel-bg: #161a22;
-            --panel-border: #263042;
-            --text-primary: #e2e8f0;
-            --text-muted: #64748b;
+            --bg-canvas: #f8f9fa;
+            --grid-line: rgba(33, 37, 41, 0.03);
+            --block-bg: #ffffff;
+            --block-border: #e9ecef;
+            --text-title: #212529;
+            --text-body: #495057;
             
-            /* Accenti Meccanici */
-            --accent-neon: #ff6b35; /* Arancione Industriale */
-            --accent-glow: rgba(255, 107, 53, 0.2);
-            --led-on: #2ecc71;
+            /* Accenti di Progettazione */
+            --accent-tech: #e65f2b; /* Arancione Industriale Opaco */
+            --accent-subtle: rgba(230, 95, 43, 0.08);
+            --led-ready: #28a745;
             
-            --tech-transition: all 0.25s cubic-bezier(0.215, 0.610, 0.355, 1);
+            /* Curva cinematica ultra-pulita per i movimenti hardware-like */
+            --panel-transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        @media (prefers-color-scheme: light) {
+        @media (prefers-color-scheme: dark) {
             :root {
-                --bg-grid: #f4f6f9;
-                --grid-color: rgba(0, 0, 0, 0.03);
-                --panel-bg: #ffffff;
-                --panel-border: #d0d7de;
-                --text-primary: #1f2328;
-                --text-muted: #57606a;
-                --accent-neon: #d94e1e;
-                --accent-glow: rgba(217, 78, 30, 0.15);
+                --bg-canvas: #0d0f12;
+                --grid-line: rgba(255, 255, 255, 0.02);
+                --block-bg: #14171c;
+                --block-border: #22262f;
+                --text-title: #f8f9fa;
+                --text-body: #a6b0bb;
+                --accent-tech: #ff7a45;
+                --accent-subtle: rgba(255, 122, 69, 0.12);
             }
         }
 
@@ -41,93 +42,77 @@
         }
 
         body {
-            font-family: "Courier New", Courier, monospace; /* Tocco retrò nei dettagli */
-            background-color: var(--bg-grid);
-            /* Sfondo a Griglia Ingegneristica */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-canvas);
             background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: var(--text-primary);
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: var(--text-body);
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Testo principale più leggibile per i blocchi lunghi */
-        p, label, input, textarea, button {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        /* --- PRIVACY WALL (STILE NOTIFICA DI SISTEMA) --- */
-        #privacy-wall {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-grid);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .wall-content {
-            background: var(--panel-bg);
-            border: 2px solid var(--panel-border);
-            padding: 35px;
-            max-width: 480px;
-            width: 90%;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-            position: relative;
-        }
-
-        .wall-content::before {
-            content: "[ SYS_INIT ]";
-            position: absolute;
-            top: -10px; left: 20px;
-            background: var(--bg-grid);
-            padding: 0 8px;
-            font-size: 11px;
-            color: var(--accent-neon);
-            font-weight: bold;
-        }
-
-        /* --- PLANCIA DI COMANDO (HEADER) --- */
+        /* --- ARCHITETTURA HEADER --- */
         header {
             width: 100%;
-            background: var(--panel-bg);
-            border-bottom: 2px solid var(--panel-border);
+            background: var(--block-bg);
+            border-bottom: 1px solid var(--block-border);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
         .nav-container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
-            height: 70px;
+            padding: 0 24px;
+            height: 75px;
+            position: relative;
         }
 
-        .logo {
-            font-size: 15px;
-            font-weight: bold;
-            letter-spacing: 1px;
+        /* BARRA DI CARICAMENTO INTEGRATA (LINEA DI TRANSIZIONE ANIMATA) */
+        #loading-bar {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            background: var(--accent-tech);
+            z-index: 1001;
+            transition: none;
+        }
+
+        @keyframes networkFlash {
+            0% { width: 0; left: 0; }
+            50% { width: 70%; left: 15%; }
+            100% { width: 0; left: 100%; }
+        }
+
+        .logo-section {
             display: flex;
             align-items: center;
             gap: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-title);
         }
 
-        .led-indicator {
-            width: 8px;
-            height: 8px;
-            background-color: var(--led-on);
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background-color: var(--led-ready);
             border-radius: 50%;
-            box-shadow: 0 0 8px var(--led-on);
+            display: inline-block;
         }
 
         nav ul {
@@ -135,445 +120,556 @@
             display: flex;
             margin: 0;
             padding: 0;
-            height: 70px;
+            height: 75px;
+            gap: 4px;
         }
 
-        nav ul li {
-            display: flex;
-        }
+        nav ul li { display: flex; }
 
         nav ul li a {
             text-decoration: none;
-            color: var(--text-muted);
-            font-size: 13px;
+            color: var(--text-body);
+            font-size: 12px;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             padding: 0 20px;
             display: flex;
             align-items: center;
             gap: 8px;
-            border-left: 1px solid transparent;
-            border-right: 1px solid transparent;
             cursor: pointer;
-            transition: var(--tech-transition);
-        }
-
-        nav ul li a:hover {
-            color: var(--text-primary);
-            background: rgba(0,0,0,0.02);
-        }
-
-        nav ul li a.active {
-            color: var(--accent-neon);
-            background: var(--bg-grid);
-            border-left: 1px solid var(--panel-border);
-            border-right: 1px solid var(--panel-border);
-            box-shadow: inset 0 3px 0 var(--accent-neon);
-        }
-
-        /* --- AREA PRINCIPALE (CONSOLE CHIUSA IN SCOCCHE) --- */
-        main {
-            max-width: 900px;
-            width: 90%;
-            margin: 50px auto;
-            flex: 1;
-        }
-
-        .panel {
-            display: none;
-            background: var(--panel-bg);
-            border: 2px solid var(--panel-border);
-            padding: 40px;
+            transition: var(--panel-transition);
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
 
-        /* Angoli decorativi stile hardware */
-        .panel::after {
+        nav ul li a:hover { color: var(--text-title); }
+        nav ul li a.active { color: var(--accent-tech); }
+
+        nav ul li a::after {
             content: "";
             position: absolute;
-            top: -2px; right: -2px;
-            width: 15px; height: 15px;
-            border-top: 2px solid var(--accent-neon);
-            border-right: 2px solid var(--accent-neon);
+            bottom: -1px; left: 20px; right: 20px;
+            height: 2px;
+            background: var(--accent-tech);
+            transform: scaleX(0);
+            transition: var(--panel-transition);
         }
 
-        .panel.active {
+        nav ul li a.active::after {
+            transform: scaleX(1);
+        }
+
+        /* --- BLOCCHI CONTENUTO ANIMATI --- */
+        main {
+            max-width: 850px;
+            width: 90%;
+            margin: 60px auto;
+            flex: 1;
+            position: relative;
+        }
+
+        .document-block {
+            display: none;
+            background: var(--block-bg);
+            border: 1px solid var(--block-border);
+            padding: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.01);
+            position: relative;
+            opacity: 0;
+        }
+
+        .document-block.active {
             display: block;
-            animation: panelBoot 0.3s ease-out forwards;
+            animation: blockEnter 0.45s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
         }
 
-        @keyframes panelBoot {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
+        .document-block.leaving {
+            display: block;
+            animation: blockExit 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
         }
 
-        .panel-tag {
+        @keyframes blockEnter {
+            0% { opacity: 0; transform: translateY(-15px) scale(0.99); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes blockExit {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(15px) scale(0.99); }
+        }
+
+        .block-id {
             position: absolute;
-            bottom: -11px; right: 20px;
-            background: var(--bg-grid);
-            padding: 0 8px;
+            top: 20px; right: 25px;
             font-size: 10px;
-            color: var(--text-muted);
-            font-weight: bold;
+            font-family: monospace;
+            color: var(--block-border);
+            letter-spacing: 1px;
         }
 
         h1 {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 700;
+            color: var(--text-title);
             margin-top: 0;
-            margin-bottom: 25px;
-            text-transform: uppercase;
+            margin-bottom: 24px;
             letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        h1::before {
-            content: "//";
-            color: var(--accent-neon);
         }
 
         p {
             font-size: 15px;
-            color: var(--text-muted);
             line-height: 1.7;
+            margin-bottom: 20px;
         }
 
-        /* --- COMPONENTI INTERFACCIA TECNICA --- */
-        .grid-form {
+        /* --- SEZIONE BOTTONI & GRIGLIE NAVIGAZIONE --- */
+        .btn-container { display: flex; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 35px;
+        }
+
+        .btn-blueprint {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--text-title);
+            color: var(--block-bg);
+            border: none;
+            padding: 15px 30px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--panel-transition);
+        }
+
+        .btn-blueprint:hover { background: var(--accent-tech); color: white; transform: translateY(-1px); }
+        .btn-blueprint:active { transform: translateY(0); }
+        .btn-outline { background: transparent; color: var(--text-body); border: 1px solid var(--block-border); }
+        .btn-outline:hover { background: var(--bg-canvas); border-color: var(--text-title); color: var(--text-title); }
+        
+        .btn-home-back {
+            margin-top: 40px;
+            border-top: 1px dashed var(--block-border);
+            padding-top: 30px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        /* --- INTERFACCIA DEL FORM --- */
+        .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 24px;
             margin-top: 35px;
         }
 
-        .field-block {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
+        .form-cell { display: flex; flex-direction: column; gap: 8px; }
+        .cell-full { grid-column: span 2; }
 
-        .wide-block { grid-column: span 2; }
-
-        .field-block label {
+        .form-cell label {
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--text-muted);
+            color: var(--text-title);
         }
 
-        .field-block input, .field-block textarea {
-            background: var(--bg-grid);
-            border: 1px solid var(--panel-border);
-            color: var(--text-primary);
-            padding: 14px;
+        .form-cell input, .form-cell textarea {
+            background: var(--bg-canvas);
+            border: 1px solid var(--block-border);
+            color: var(--text-title);
+            padding: 14px 16px;
             font-size: 14px;
+            border-radius: 0;
             outline: none;
-            transition: var(--tech-transition);
+            transition: var(--panel-transition);
         }
 
-        .field-block input:focus, .field-block textarea:focus {
-            border-color: var(--accent-neon);
-            box-shadow: 0 0 10px var(--accent-glow);
+        .form-cell input:focus, .form-cell textarea:focus {
+            border-color: var(--text-title);
+            background: var(--block-bg);
         }
 
-        .field-block textarea { min-height: 130px; resize: vertical; }
+        .form-cell textarea { min-height: 140px; resize: vertical; }
 
-        /* Interruttore Custom Meccanico */
-        .toggle-container {
+        .scout-checkbox {
             display: flex;
             align-items: center;
             gap: 12px;
             cursor: pointer;
             user-select: none;
-            padding: 5px 0;
+            padding: 4px 0;
         }
 
-        .toggle-container input { display: none; }
+        .scout-checkbox input { display: none; }
 
-        .switch-hardware {
-            width: 38px;
-            height: 20px;
-            background: var(--panel-border);
-            position: relative;
-            transition: var(--tech-transition);
+        .box-blueprint {
+            width: 18px;
+            height: 18px;
+            border: 1px solid var(--block-border);
+            background: var(--bg-canvas);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--panel-transition);
         }
 
-        .switch-hardware::before {
+        .scout-checkbox input:checked + .box-blueprint {
+            background: var(--text-title);
+            border-color: var(--text-title);
+        }
+
+        .box-blueprint::after {
             content: "";
-            position: absolute;
-            top: 2px; left: 2px;
-            width: 16px; height: 16px;
-            background: var(--text-muted);
-            transition: var(--tech-transition);
+            width: 4px;
+            height: 8px;
+            border: solid var(--block-bg);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            display: none;
         }
 
-        .toggle-container input:checked + .switch-hardware {
-            background: var(--accent-neon);
-        }
+        .scout-checkbox input:checked + .box-blueprint::after { display: block; }
 
-        .toggle-container input:checked + .switch-hardware::before {
-            transform: translateX(18px);
-            background: white;
-        }
+        /* --- CONTENITORI MULTIMEDIALI --- */
+        .media-dock { width: 100%; border: 1px solid var(--block-border); background: var(--bg-canvas); position: relative; margin: 30px 0; }
+        .frame-16-9 { padding-top: 56.25%; }
+        .frame-a4 { padding-top: 130%; }
 
-        /* --- BOTTONI "PULSANTI DI SISTEMA" --- */
-        .action-zone {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
+        .media-dock iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        .btn-terminal {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--accent-neon);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            font-size: 13px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            transition: var(--tech-transition);
-            box-shadow: 0 4px 0 #b84318;
-        }
-
-        .btn-terminal:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #b84318, 0 0 15px var(--accent-glow);
-        }
-
-        .btn-terminal:active {
-            transform: translateY(2px);
-            box-shadow: 0 0px 0 #b84318;
-        }
-
-        .btn-sub {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--panel-border);
-            box-shadow: none;
-        }
-
-        .btn-sub:hover {
-            background: rgba(0,0,0,0.03);
-            border-color: var(--text-primary);
-            box-shadow: none;
-        }
-
-        /* --- CONTENITORI MULTIMEDIALI STRUTTURATI --- */
-        .media-bay {
-            width: 100%;
-            border: 1px solid var(--panel-border);
-            background: #000;
-            position: relative;
-            margin: 30px 0;
-        }
-
-        .aspect-16-9 { padding-top: 56.25%; }
-        .aspect-a4 { padding-top: 130%; }
-
-        .media-bay iframe {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            border: none;
-        }
-
-        /* Scatola Donazioni Integrata */
-        .hardware-footer-box {
-            margin-top: 40px;
-            padding: 25px;
-            border: 1px dashed var(--panel-border);
-            background: rgba(0, 0, 0, 0.01);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        /* --- FOOTER --- */
+        /* --- FOOTER DIDATTICO --- */
         footer {
-            width: 100%;
-            background: var(--panel-bg);
-            border-top: 2px solid var(--panel-border);
-            padding: 25px 20px;
-            text-align: center;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: auto;
+            width: 100%; background: var(--block-bg); border-top: 1px solid var(--block-border);
+            padding: 30px 24px; text-align: center; font-size: 11px; letter-spacing: 0.5px; color: var(--text-body); margin-top: auto;
         }
 
-        footer a { color: var(--accent-neon); text-decoration: none; font-weight: bold; }
-        .icon-unit { width: 14px; height: 14px; fill: currentColor; }
+        footer a { color: var(--text-title); text-decoration: none; font-weight: 700; }
+        footer a:hover { color: var(--accent-tech); }
+        .icon-svg { width: 14px; height: 14px; fill: currentColor; }
+
+        /* --- CONTENITORE EASTER EGG --- */
+        #game-container {
+            display: none;
+            background: var(--block-bg);
+            border: 2px dashed var(--accent-tech);
+            padding: 30px;
+            margin-top: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        #game-canvas {
+            background: var(--bg-canvas);
+            border: 1px solid var(--block-border);
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        .game-status {
+            font-family: monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-tech);
+        }
     </style>
 </head>
 <body>
 
-    <!-- PRIVACY WALL -->
-    <div id="privacy-wall">
-        <div class="wall-content">
-            <h3>[ ALLERTA COUPLER ]</h3>
-            <p>Il sistema richiede l'autorizzazione per caricare moduli esterni e riproduttori multimediali integrati nell'architettura.</p>
-            <button class="btn-terminal" onclick="dismissWall()" style="width: 100%; margin-top: 15px;">Inizializza Sito</button>
-        </div>
-    </div>
-
-    <!-- ICONE SVG -->
     <svg style="display: none;">
-        <symbol id="i-home" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></symbol>
-        <symbol id="i-video" viewBox="0 0 24 24"><path d="M21 6h-7.59l3.29-3.29L16 2l-4 4-4-4-.71.71L10.59 6H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H3V8h18v12zM8 10l7 4-7 4z"/></symbol>
-        <symbol id="i-slides" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></symbol>
-        <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></symbol>
-        <symbol id="i-mail" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></symbol>
+        <symbol id="i-index" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></symbol>
+        <symbol id="i-movie" viewBox="0 0 24 24"><path d="M21 6h-7.59l3.29-3.29L16 2l-4 4-4-4-.71.71L10.59 6H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H3V8h18v12zM8 10l7 4-7 4z"/></symbol>
+        <symbol id="i-board" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></symbol>
+        <symbol id="i-page" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></symbol>
+        <symbol id="i-envelope" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></symbol>
     </svg>
 
-    <!-- HEADER / CONTROL PANEL -->
     <header>
         <div class="nav-container">
-            <div class="logo">
-                <div class="led-indicator"></div>
-                <span>CORE_FRANCESCO [v1.0]</span>
+            <div id="loading-bar"></div>
+            <div class="logo-section">
+                <div class="status-dot"></div>
+                <span>F.A. CARUSO // COMPITO_AUTENTICO</span>
             </div>
             <nav>
                 <ul>
-                    <li><a onclick="switchPanel('home')" id="nav-home" class="active"><svg class="icon-unit"><use href="#i-home"/></svg>INDEX</a></li>
-                    <li><a onclick="switchPanel('video')" id="nav-video"><svg class="icon-unit"><use href="#i-video"/></svg>VID_REC</a></li>
-                    <li><a onclick="switchPanel('powerpoint')" id="nav-powerpoint"><svg class="icon-unit"><use href="#i-slides"/></svg>SLI_DE</a></li>
-                    <li><a onclick="switchPanel('copione')" id="nav-copione"><svg class="icon-unit"><use href="#i-doc"/></svg>SCR_IPT</a></li>
-                    <li><a onclick="switchPanel('contatti')" id="nav-contatti"><svg class="icon-unit"><use href="#i-mail"/></svg>COMM</a></li>
+                    <li><a onclick="navigate('home')" id="m-home" class="active"><svg class="icon-svg"><use href="#i-index"/></svg>Home</a></li>
+                    <li><a onclick="navigate('video')" id="m-video"><svg class="icon-svg"><use href="#i-movie"/></svg>Video</a></li>
+                    <li><a onclick="navigate('powerpoint')" id="m-powerpoint"><svg class="icon-svg"><use href="#i-board"/></svg>Slides</a></li>
+                    <li><a onclick="navigate('copione')" id="m-copione"><svg class="icon-svg"><use href="#i-page"/></svg>Copione</a></li>
+                    <li><a onclick="navigate('contatti')" id="m-contatti"><svg class="icon-svg"><use href="#i-envelope"/></svg>Contatti</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- MAIN CONSOLE -->
     <main>
-        <!-- CONSOLE: INDEX -->
-        <section id="home" class="panel active">
-            <h1>Compito Autentico</h1>
-            <p>Modulo centrale di archiviazione dati. Questo terminale contiene i report, le sequenze video e i documenti testuali strutturati per la presentazione del progetto scolastico.</p>
-            <div class="action-zone">
-                <button class="btn-terminal" onclick="switchPanel('video')">Avvia Sequenza Video</button>
-                <button class="btn-terminal btn-sub" onclick="switchPanel('contatti')">Apri Canale Contatto</button>
+        <section id="home" class="document-block active">
+            <div class="block-id">DOC_REF: 001/A</div>
+            <h1>Presentazione del Progetto</h1>
+            <p>Benvenuti nell'archivio digitale dedicato al mio Compito Autentico scolastico. Questo spazio è stato progettato per raccogliere, organizzare e presentare in modo chiaro e strutturato tutti i materiali di approfondimento prodotti.</p>
+            
+            <div class="dashboard-grid">
+                <button class="btn-blueprint" onclick="navigate('video')">
+                    <svg class="icon-svg" style="fill:white;"><use href="#i-movie"/></svg> Apri Video
+                </button>
+                <button class="btn-blueprint" onclick="navigate('powerpoint')">
+                    <svg class="icon-svg" style="fill:white;"><use href="#i-board"/></svg> Vedi Slides
+                </button>
+                <button class="btn-blueprint" onclick="navigate('copione')">
+                    <svg class="icon-svg" style="fill:white;"><use href="#i-page"/></svg> Leggi Copione
+                </button>
+                <button class="btn-blueprint btn-outline" onclick="navigate('contatti')">
+                    <svg class="icon-svg"><use href="#i-envelope"/></svg> Contatti
+                </button>
             </div>
-            <div class="panel-tag">SYS_MAIN_OK</div>
         </section>
 
-        <!-- CONSOLE: VIDEO -->
-        <section id="video" class="panel">
-            <h1>Riproduzione Sequenza Video</h1>
-            <div class="media-bay aspect-16-9">
+        <section id="video" class="document-block">
+            <div class="block-id">DOC_REF: 002/V</div>
+            <h1>Elaborato Video</h1>
+            <div class="media-dock frame-16-9">
                 <iframe src="https://www.youtube.com/embed/LIw89Dn2Wh0" allowfullscreen></iframe>
             </div>
-            <div class="panel-tag">YT_LINK_ACTIVE</div>
+            
+            <div class="btn-home-back">
+                <button class="btn-blueprint btn-outline" onclick="navigate('home')">
+                    <svg class="icon-svg"><use href="#i-index"/></svg> Torna alla Home
+                </button>
+            </div>
         </section>
 
-        <!-- CONSOLE: POWERPOINT -->
-        <section id="powerpoint" class="panel">
-            <h1>Proiezioni Grafiche (Slides)</h1>
-            <div class="media-bay aspect-16-9">
+        <section id="powerpoint" class="document-block">
+            <div class="block-id">DOC_REF: 003/S</div>
+            <h1>Supporto Visivo (Diapositive)</h1>
+            <div class="media-dock frame-16-9">
                 <iframe src="https://www.canva.com/design/DAHKNSf_bH0/pzAIoM7n_RsgoRp5Bmjl6g/view?embed" allowfullscreen></iframe>
             </div>
-            <div class="panel-tag">CANVA_DATA_LOADED</div>
+            
+            <div class="btn-home-back">
+                <button class="btn-blueprint btn-outline" onclick="navigate('home')">
+                    <svg class="icon-svg"><use href="#i-index"/></svg> Torna alla Home
+                </button>
+            </div>
         </section>
 
-        <!-- CONSOLE: COPIONE -->
-        <section id="copione" class="panel">
-            <h1>Documento di Testo (Copione)</h1>
-            <div class="media-bay aspect-a4">
+        <section id="copione" class="document-block">
+            <div class="block-id">DOC_REF: 004/T</div>
+            <h1>Testo Strutturato (Copione)</h1>
+            <div class="media-dock frame-a4">
                 <iframe src="https://docs.google.com/viewer?url=https://drive.google.com/file/d/1H87bqyARRU9Sp3qGJCFzJYM3Zga0ObK0/view?usp=share_link&embedded=true"></iframe>
             </div>
-            <div class="action-zone">
-                <a href="https://drive.google.com/file/d/INSERISCI_QUI_L_ID_DEL_SECONDO_FILE/view?usp=sharing" target="_blank" class="btn-terminal" style="text-decoration:none;">
+            <div class="btn-container">
+                <a href="https://drive.google.com/file/d/INSERISCI_QUI_L_ID_DEL_SECONDO_FILE/view?usp=sharing" target="_blank" class="btn-blueprint" style="text-decoration:none;">
                     Richiedi Accesso in Modifica
                 </a>
             </div>
-            <div class="panel-tag">GDRIVE_STREAM_SECURE</div>
+            
+            <div class="btn-home-back">
+                <button class="btn-blueprint btn-outline" onclick="navigate('home')">
+                    <svg class="icon-svg"><use href="#i-index"/></svg> Torna alla Home
+                </button>
+            </div>
         </section>
 
-        <!-- CONSOLE: COMM (CONTATTI) -->
-        <section id="contatti" class="panel">
-            <h1>Invia Messaggio al Core</h1>
-            <p>Inserisci le tue coordinate di rete per avviare una trasmissione asincrona di testo.</p>
+        <section id="contatti" class="document-block">
+            <div class="block-id">DOC_REF: 005/C</div>
+            <h1>Canale di Comunicazione</h1>
+            <p>Utilizza il modulo sottostante per inoltrare domande o note relative alla documentazione presentata.</p>
             
-            <form class="grid-form" onsubmit="executeSubmit(event)">
-                <div class="field-block">
+            <form class="form-grid" onsubmit="sendForm(event)">
+                <div class="form-cell">
                     <label>Nome</label>
-                    <input type="text" id="inp-nome" required placeholder="Es. Mario">
+                    <input type="text" id="in-name" required placeholder="Inserisci il tuo nome" oninput="checkEasterEgg(this.value)">
                 </div>
-                <div class="field-block">
+                <div class="form-cell">
                     <label>Cognome</label>
-                    <input type="text" id="inp-cognome" required placeholder="Es. Rossi">
+                    <input type="text" id="in-surname" required placeholder="Inserisci il tuo cognome">
                 </div>
-                <div class="field-block wide-block">
+                <div class="form-cell cell-full">
                     <label>Indirizzo E-mail</label>
-                    <input type="email" id="inp-email" required placeholder="nome@dominio.com">
+                    <input type="email" id="in-mail" required placeholder="nome@dominio.com">
                 </div>
-                <div class="field-block wide-block">
-                    <label>Composizione Messaggio</label>
-                    <textarea id="inp-msg" required placeholder="Scrivi qui il testo..."></textarea>
+                <div class="form-cell cell-full">
+                    <label>Messaggio</label>
+                    <textarea id="in-text" required placeholder="Scrivi qui il tuo testo..."></textarea>
                 </div>
                 
-                <div class="field-block wide-block">
-                    <label class="toggle-container">
-                        <input type="checkbox" id="chk-copia">
-                        <div class="switch-hardware"></div>
-                        <span style="font-size: 13px; font-weight: 500;">Invia copia di backup al mio indirizzo email</span>
+                <div class="form-cell cell-full">
+                    <label class="scout-checkbox">
+                        <input type="checkbox" id="in-copy">
+                        <div class="box-blueprint"></div>
+                        <span style="font-size: 13px; font-weight: 500;">Desidero ricevere una copia di questo messaggio sulla mia e-mail</span>
                     </label>
                 </div>
                 
-                <div class="wide-block">
-                    <button type="submit" class="btn-terminal">Trasmetti Dati</button>
+                <div class="cell-full btn-container">
+                    <button type="submit" class="btn-blueprint">Invia Messaggio</button>
                 </div>
             </form>
 
-            <div class="hardware-footer-box">
-                <div>
-                    <h4 style="margin: 0 0 5px 0; font-family: inherit;">Sostieni la ricerca</h4>
-                    <p style="margin:0; font-size:13px;">Se apprezzi lo sviluppo di questa console, offrimi un caffè digitale.</p>
-                </div>
-                <a href="#" target="_blank" class="btn-terminal btn-sub" style="text-decoration:none; border-color:var(--accent-neon); color:var(--accent-neon);">⚡ COFFEE_DONATE</a>
+            <div id="game-container">
+                <div class="game-status">// TERMINALE ENGINE REBOOT // PREMI SULLA GRIGLIA O SPAZIO PER SALTARE</div>
+                <canvas id="game-canvas" width="600" height="150"></canvas>
+                <div id="game-score" class="game-status" style="color:var(--text-title)">PUNTEGGIO: 0</div>
+                <button class="btn-blueprint btn-outline" onclick="closeGame()" style="margin-top: 15px; padding: 8px 16px;">Chiudi Modulo</button>
             </div>
-            <div class="panel-tag">COMM_CHANNEL_READY</div>
+            
+            <div class="btn-home-back">
+                <button class="btn-blueprint btn-outline" onclick="navigate('home')">
+                    <svg class="icon-svg"><use href="#i-index"/></svg> Torna alla Home
+                </button>
+            </div>
         </section>
     </main>
 
-    <!-- FOOTER INFRASTRUTTURA -->
     <footer>
         <div>
-            CONSOLE_LOG // AREA: TREVISO // © 2026 FRANCESCO A. CARUSO // NET_MAIL: <a href="mailto:progettoautentico.francescocaruso@outlook.com">progettoautentico.francescocaruso@outlook.com</a>
+            REGISTRO REGIONALE // AREA: TREVISO // © 2026 FRANCESCO A. CARUSO // CONTATTO ISTITUZIONALE: <a href="mailto:progettoautentico.francescocaruso@outlook.com">progettoautentico.francescocaruso@outlook.com</a>
         </div>
     </footer>
 
     <script>
-        function switchPanel(panelId) {
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('nav ul li a').forEach(a => a.classList.remove('active'));
+        let isTransitioning = false;
+
+        function navigate(tabId) {
+            if (isTransitioning) return;
             
-            document.getElementById(panelId).classList.add('active');
-            document.getElementById('nav-' + panelId).classList.add('active');
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            const currentBlock = document.querySelector('.document-block.active');
+            const nextBlock = document.getElementById(tabId);
+            
+            if (currentBlock === nextBlock) return;
+            isTransitioning = true;
+
+            const bar = document.getElementById('loading-bar');
+            bar.style.animation = 'networkFlash 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+
+            document.querySelectorAll('nav ul li a').forEach(a => a.classList.remove('active'));
+            const activeMenuLink = document.getElementById('m-' + tabId);
+            if (activeMenuLink) activeMenuLink.classList.add('active');
+
+            if (currentBlock) {
+                currentBlock.classList.add('leaving');
+                
+                setTimeout(() => {
+                    currentBlock.classList.remove('active', 'leaving');
+                    nextBlock.classList.add('active');
+                    window.scrollTo({top: 0});
+                    
+                    setTimeout(() => {
+                        bar.style.animation = 'none';
+                        isTransitioning = false;
+                    }, 150);
+                }, 300);
+            } else {
+                nextBlock.classList.add('active');
+                isTransitioning = false;
+            }
         }
 
-        function dismissWall() {
-            const wall = document.getElementById('privacy-wall');
-            wall.style.opacity = '0';
-            setTimeout(() => wall.style.display = 'none', 300);
-        }
-
-        function executeSubmit(event) {
+        function sendForm(event) {
             event.preventDefault();
-            const nome = document.getElementById('inp-nome').value;
-            const copia = document.getElementById('chk-copia').checked;
-            alert(`[INFO] Trasmissione completata con successo. Grazie ${nome}.${copia ? ' Copia log inviata alla tua mail.' : ''}`);
+            const nome = document.getElementById('in-name').value;
+            alert(`Messaggio registrato correttamente. Grazie per il riscontro, ${nome}.`);
             event.target.reset();
+        }
+
+        /* --- LOGICA DI GIOCO INTERNA (EASTER EGG) --- */
+        let gameLoopInterval;
+        let isPlaying = false;
+        
+        function checkEasterEgg(val) {
+            if(val === "Mao Zedong") {
+                document.querySelector('.form-grid').style.display = 'none';
+                document.getElementById('game-container').style.display = 'block';
+                initGame();
+            }
+        }
+
+        function closeGame() {
+            document.getElementById('game-container').style.display = 'none';
+            document.querySelector('.form-grid').style.display = 'grid';
+            document.getElementById('in-name').value = '';
+            clearInterval(gameLoopInterval);
+            isPlaying = false;
+        }
+
+        function initGame() {
+            const canvas = document.getElementById('game-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            let score = 0;
+            let playerY = 0;
+            let playerVelocity = 0;
+            let isJumping = false;
+            let obstacles = [];
+            let gameSpeed = 4;
+            isPlaying = true;
+
+            function jump() {
+                if (!isJumping) {
+                    playerVelocity = -10;
+                    isJumping = true;
+                }
+            }
+
+            window.onkeydown = function(e) { if(e.code === "Space" && isPlaying) { e.preventDefault(); jump(); } };
+            canvas.onclick = function() { if(isPlaying) jump(); };
+
+            obstacles = [{ x: 600, width: 15, height: 30 }];
+
+            clearInterval(gameLoopInterval);
+            gameLoopInterval = setInterval(() => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.strokeStyle = '#212529';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(0, 130);
+                ctx.lineTo(600, 130);
+                ctx.stroke();
+
+                playerVelocity += 0.5;
+                playerY += playerVelocity;
+                if (playerY >= 0) {
+                    playerY = 0;
+                    playerVelocity = 0;
+                    isJumping = false;
+                }
+
+                ctx.fillStyle = '#e65f2b';
+                ctx.fillRect(40, 100 + playerY, 25, 30);
+
+                obstacles.forEach(obs => {
+                    obs.x -= gameSpeed;
+                    ctx.fillStyle = '#212529';
+                    ctx.fillRect(obs.x, 130 - obs.height, obs.width, obs.height);
+
+                    if (obs.x < 65 && obs.x + obs.width > 40 && (100 + playerY + 30) > (130 - obs.height)) {
+                        score = 0;
+                        obs.x = 600;
+                        gameSpeed = 4;
+                    }
+                });
+
+                if (obstacles[0].x < -20) {
+                    obstacles[0].x = 600 + Math.random() * 200;
+                    obstacles[0].height = 20 + Math.random() * 25;
+                    score++;
+                    gameSpeed += 0.2;
+                    document.getElementById('game-score').innerText = `PUNTEGGIO: ${score}`;
+                }
+
+            }, 1000 / 60);
         }
     </script>
 </body>
