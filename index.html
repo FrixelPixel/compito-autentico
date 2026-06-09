@@ -3,46 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compito Autentico - FrixelPixel</title>
+    <title>Progetto Autentico - Francesco A. Caruso</title>
     <style>
+        /* Stile Generale Minimal/Apple */
+        :root {
+            --bg-color: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-main: #1d1d1f;
+            --text-secondary: #86868b;
+            --accent: #0071e3;
+            --accent-hover: #0077ed;
+            --border-radius: 16px;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f5f5f7;
-            color: #1d1d1f;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
             align-items: center;
+        }
+
+        /* Barra di Navigazione */
+        header {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
         }
-        .container {
-            text-align: center;
-            background: white;
-            padding: 40px;
-            border-radius: 18px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            max-width: 500px;
+
+        .nav-container {
             width: 90%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
         }
-        h1 {
-            font-size: 32px;
+
+        .logo {
+            font-size: 18px;
             font-weight: 600;
-            margin-bottom: 10px;
+            letter-spacing: -0.5px;
         }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--accent);
+        }
+
+        /* Contenitore Principale */
+        main {
+            margin-top: 100px;
+            width: 90%;
+            max-width: 800px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-bottom: 60px;
+        }
+
+        /* Struttura a Schede (Pagine) */
+        .tab-content {
+            display: none;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
         p {
             font-size: 18px;
-            color: #86868b;
-            line-height: 1.5;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Bottoni d'Azione veloci per la Home */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 22px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #e8e8ed;
+            color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background-color: #dcdce2;
+        }
+
+        /* Segnaposto per i tuoi veri file (Video, PPT, PDF) */
+        .embed-box {
+            background-color: #f5f5f7;
+            border: 2px dashed #d2d2d7;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 25px 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Benvenuti sul mio sito!</h1>
-        <p>Questo è lo spazio per il mio compito autentico, ospitato gratuitamente su GitHub Pages.</p>
-    </div>
+    <!-- BARRA DI NAVIGAZIONE SUPERIORE -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">Progetto Autentico</div>
+            <nav>
+                <ul>
+                    <li><a onclick="openTab('home')" id="link-home" class="active">Home</a></li>
+                    <li><a onclick="openTab('video')" id="link-video">Video</a></li>
+                    <li><a onclick="openTab('powerpoint')" id="link-powerpoint">PowerPoint</a></li>
+                    <li><a onclick="openTab('copione')" id="link-copione">Copione</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENUTO DEL SITO -->
+    <main>
+        
+        <!-- SEZIONE: HOME -->
+        <section id="home" class="tab-content active">
+            <h1>Compito Autentico</h1>
+            <p>Salve, io mi chiamo Francesco A. Caruso e questa pagina web è interamente dedicata al mio Compito Autentico.</p>
+            <p>Esplora il menu in alto o usa i collegamenti rapidi qui sotto per visionare i materiali del progetto:</p>
+            
+            <div class="button-group">
+                <button class="btn" onclick="openTab('video')">Guarda il Video</button>
+                <button class="btn btn-secondary" onclick="openTab('powerpoint')">Apri PowerPoint</button>
+                <button class="btn btn-secondary" onclick="openTab('copione')">Leggi il Copione</button>
+            </div>
+        </section>
+
+        <!-- SEZIONE: VIDEO -->
+        <section id="video" class="tab-content">
+            <h1>Il Video del Progetto</h1>
+            <p>In questa sezione puoi guardare il file video realizzato per il compito autentico.</p>
+            
+            <div class="embed-box">
+                <p>🎥 <strong>Spazio per il tuo Video</strong></p>
+                <p style="font-size:14px;">(Puoi caricare un file video su GitHub, caricarlo su YouTube o Drive e inserire qui il player del video inserendo un tag &lt;iframe&gt; o &lt;video&gt;)</p>
+            </div>
+        </section>
+
+        <!-- SEZIONE: POWERPOINT -->
+        <section id="powerpoint" class="tab-content">
+            <h1>Presentazione PowerPoint</h1>
+            <p>Qui puoi consultare la presentazione di diapositive creata a supporto dell'esposizione.</p>
+            
+            <div class="embed-box">
+                <p>📊 <strong>Spazio per le Slide</strong></p>
+                <p style="font-size:14px;">(Puoi inserire un link diretto per scaricare il file .pptx oppure esportare le diapositive in PDF/immagini e mostrarle qui direttamente)</p>
+            </div>
+        </section>
+
+        <!-- SEZIONE: COPIONE -->
+        <section id="copione" class="tab-content">
+            <h1>Il Copione</h1>
+            <p>Questo è il testo completo e la traccia scritta seguita durante lo sviluppo del progetto.</p>
+            
+            <div class="embed-box" style="text-align: left; padding: 30px; background: #fafafa; border: 1px solid #e2e2e7;">
+                <h3 style="margin-top:0;">Traccia del Testo</h3>
+                <p style="font-size:15px; color:#1d1d1f;">[Puoi iniziare a scrivere o incollare tutto il testo del tuo copione direttamente qui dentro, riga per riga, in modo che sia comodamente leggibile sul sito!]</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER (PIÈ DI PAGINA) -->
+    <footer>
+        <div>
+            © 2026 Progetto Autentico di Francesco A. Caruso — Email: <a href="mailto:progettoautentico.francescocaruso@outlook.com">progettoautentico.francescocaruso@outlook.com</a>
+        </div>
+    </footer>
+
+    <!-- SCRIPT JAVASCRIPT PER IL CAMBIO PAGINA FLUIDO -->
+    <script>
+        function openTab(tabId) {
+            // Nascondi tutti i contenuti delle schede
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Rimuovi la classe attiva da tutti i link del menu
+            const links = document.querySelectorAll('nav ul li a');
+            links.forEach(link => link.classList.remove('active'));
+
+            // Mostra la scheda selezionata e attiva il relativo link
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('link-' + tabId).classList.add('active');
+            
+            // Riporta la pagina in cima quando si cambia scheda
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    </script>
 
 </body>
 </html>
