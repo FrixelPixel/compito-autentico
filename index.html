@@ -104,6 +104,14 @@
             transition: var(--panel-transition); position: relative;
         }
 
+        /* CORREZIONE: Dimensionamento esatto per le icone SVG dell'header */
+        .icon-svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor; /* Mantiene il colore coordinato al testo */
+            flex-shrink: 0;
+        }
+
         nav ul li a:hover { color: var(--text-title); }
         nav ul li a.active { color: var(--accent-tech); }
         nav ul li a::after {
@@ -217,7 +225,6 @@
 </head>
 <body>
 
-    <!-- SVG ICON SET -->
     <svg style="display: none;">
         <symbol id="i-index" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></symbol>
         <symbol id="i-movie" viewBox="0 0 24 24"><path d="M21 6h-7.59l3.29-3.29L16 2l-4 4-4-4-.71.71L10.59 6H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H3V8h18v12zM8 10l7 4-7 4z"/></symbol>
@@ -228,7 +235,6 @@
         <symbol id="i-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></symbol>
     </svg>
 
-    <!-- HEADER -->
     <header>
         <div class="nav-container">
             <div id="loading-bar"></div>
@@ -250,9 +256,7 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main>
-        <!-- HOME -->
         <section id="home" class="document-block active">
             <div class="block-id">NODE_REF: 001/HOME</div>
             <h1>Presentazione del Progetto</h1>
@@ -268,7 +272,6 @@
             </div>
         </section>
 
-        <!-- BACHECA -->
         <section id="annunci" class="document-block">
             <div class="block-id">NODE_REF: 002/NEWS</div>
             <h1>Bacheca Annunci Istituzionali</h1>
@@ -276,7 +279,6 @@
             <div class="btn-home-back"><button class="btn-blueprint btn-outline" onclick="navigate('home')">Torna alla Home</button></div>
         </section>
 
-        <!-- VIDEO -->
         <section id="video" class="document-block">
             <div class="block-id">NODE_REF: 003/VIDEO</div>
             <h1>Elaborato Video</h1>
@@ -284,7 +286,6 @@
             <div class="btn-home-back"><button class="btn-blueprint btn-outline" onclick="navigate('home')">Torna alla Home</button></div>
         </section>
 
-        <!-- SLIDES -->
         <section id="powerpoint" class="document-block">
             <div class="block-id">NODE_REF: 004/SLIDES</div>
             <h1>Supporto Visivo (Diapositive)</h1>
@@ -292,7 +293,6 @@
             <div class="btn-home-back"><button class="btn-blueprint btn-outline" onclick="navigate('home')">Torna alla Home</button></div>
         </section>
 
-        <!-- COPIONE -->
         <section id="copione" class="document-block">
             <div class="block-id">NODE_REF: 005/SCRIPT</div>
             <h1>Testo Strutturato (Copione Integrato)</h1>
@@ -301,7 +301,6 @@
             <div class="btn-home-back"><button class="btn-blueprint btn-outline" onclick="navigate('home')">Torna alla Home</button></div>
         </section>
 
-        <!-- CONTATTI + EASTER EGG AVANZATO -->
         <section id="contatti" class="document-block">
             <div class="block-id">NODE_REF: 006/MAIL</div>
             <h1>Canale di Comunicazione</h1>
@@ -328,7 +327,6 @@
                 </div>
             </form>
 
-            <!-- GIOCO TERMINALE COMPLETO -->
             <div id="game-container">
                 <div id="game-status-text" class="game-status">// STATUS: STANDBY // PREMI SPAZIO O TOCCA IL CANVAS PER INIZIARE</div>
                 <canvas id="game-canvas" width="600" height="150"></canvas>
@@ -339,7 +337,6 @@
             <div class="btn-home-back"><button class="btn-blueprint btn-outline" onclick="navigate('home')">Torna alla Home</button></div>
         </section>
 
-        <!-- CONSOLE AMMINISTRATORE -->
         <section id="admin" class="document-block">
             <div class="block-id">SECURE_NODE // ROOT_ACCESS</div>
             <h1>Console Analytics & Gestione Flussi</h1>
@@ -476,7 +473,7 @@
             const statusText = document.getElementById('game-status-text');
             
             let score = 0;
-            let playerY = 0; // Distanza dal suolo (0 = a terra, valori negativi = in aria)
+            let playerY = 0; 
             let playerVelocity = 0;
             let isJumping = false;
             let obstacles = [];
@@ -484,7 +481,7 @@
 
             const baseWidth = 25;
             const baseHeight = 30;
-            const playerX = 40; // Posizione X fissa dell'omino
+            const playerX = 40; 
 
             statusText.innerText = "// STATUS: STANDBY // PREMI SPAZIO O FARE CLICK PER AVVIARE IL SISTEMA";
 
@@ -508,13 +505,11 @@
             gameLoopInterval = setInterval(() => {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                // Disegna la linea del terreno
                 ctx.strokeStyle = document.body.classList.contains('terminal-mode') ? '#33ff33' : '#212529';
                 ctx.lineWidth = 2;
                 ctx.beginPath(); ctx.moveTo(0, 130); ctx.lineTo(600, 130); ctx.stroke();
 
                 if (hasGameStarted) {
-                    // Gravità e movimento verticale dell'omino
                     playerVelocity += 0.5;
                     playerY += playerVelocity;
                     if (playerY >= 0) {
@@ -523,7 +518,6 @@
                         isJumping = false;
                     }
 
-                    // Calcolo esatto dei bordi dell'omino per le collisioni
                     let currentY = 130 - baseHeight + playerY;
 
                     obstacles.forEach(obs => {
@@ -531,14 +525,12 @@
                         ctx.fillStyle = document.body.classList.contains('terminal-mode') ? '#33ff33' : '#212529';
                         ctx.fillRect(obs.x, 130 - obs.height, obs.width, obs.height);
 
-                        // FORMULA DI COLLISIONE CORRETTA (AABB standard su Canvas)
                         if (
                             obs.x < (playerX + baseWidth) && 
                             (obs.x + obs.width) > playerX && 
                             (130 - obs.height) < (currentY + baseHeight) && 
                             130 > currentY
                         ) {
-                            // Crash! Reset parametri di gioco
                             score = 0;
                             obs.x = 600;
                             gameSpeed = 4;
@@ -548,7 +540,6 @@
                         }
                     });
 
-                    // Generazione ciclica degli ostacoli
                     if (obstacles[0].x < -20) {
                         obstacles[0].x = 600 + Math.random() * 200;
                         obstacles[0].height = 20 + Math.random() * 25;
@@ -558,7 +549,6 @@
                     }
                 }
 
-                // Gestione schiacciamento visivo dinamico dell'omino durante il salto
                 let currentWidth = baseWidth;
                 let currentHeight = baseHeight;
 
@@ -575,7 +565,6 @@
                 let drawX = playerX + (baseWidth - currentWidth) / 2;
                 let drawY = (130 - currentHeight) + playerY;
 
-                // Disegna l'omino (cubo tecnologico arancione)
                 ctx.fillStyle = '#e65f2b';
                 ctx.fillRect(drawX, drawY, currentWidth, currentHeight);
 
