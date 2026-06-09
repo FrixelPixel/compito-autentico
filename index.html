@@ -5,17 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Progetto Autentico - Francesco A. Caruso</title>
     <style>
-        /* --- VARIABILI E DESIGN DI BASE (APPLE STYLE) --- */
+        /* --- CONFIGURAZIONE LIQUID GLASS ULTRA & APPLE ART --- */
         :root {
-            --bg-color: #f5f5f7;
-            --card-bg: rgba(255, 255, 255, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-media-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-highlight: rgba(255, 255, 255, 0.8);
             --text-main: #1d1d1f;
-            --text-secondary: #86868b;
-            --accent: #0071e3;
-            --accent-hover: #0077ed;
-            --accent-gradient: linear-gradient(135deg, #0071e3, #42a5f5);
-            --border-radius: 22px;
-            --blur-effect: blur(20px);
+            --text-secondary: #424245;
+            --accent-gradient: linear-gradient(135deg, #ff2d55, #ff9500, #4cd964, #5ac8fa, #007aff, #5856d6);
+            --btn-gradient: linear-gradient(135deg, #0071e3, #34aadc);
+            --liquid-shadow: 0 25px 60px rgba(0, 0, 0, 0.1), 
+                             inset 0 1px 0 var(--glass-highlight),
+                             inset 0 -3px 15px rgba(255,255,255,0.4);
+            --media-shadow: 0 15px 35px rgba(0, 0, 0, 0.15),
+                            inset 0 1px 2px rgba(255,255,255,0.6),
+                            inset 0 -5px 20px rgba(255,255,255,0.2);
+            --squishy-transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         * {
@@ -25,7 +31,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
+            background-color: #0c0d14; /* Sfondo scuro di base per far risaltare l'arte Apple */
             color: var(--text-main);
             margin: 0;
             padding: 0;
@@ -34,59 +40,116 @@
             min-height: 100vh;
             align-items: center;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* --- EFFETTI DI ENTRATA INITIALE (ANIMAZIONI) --- */
-        @keyframes pageReveal {
-            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-
-        @keyframes tabSwitch {
-            from { opacity: 0; transform: scale(0.98) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,113,227,0.3); }
-            50% { transform: scale(1.02); box-shadow: 0 8px 25px rgba(0,113,227,0.5); }
-            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,113,227,0.3); }
-        }
-
-        /* --- BARRA DI NAVIGAZIONE SUPERIORE --- */
-        header {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: var(--blur-effect);
-            -webkit-backdrop-filter: var(--blur-effect);
+        /* --- SFONDO ARTISTICO ASTRATTO STILE APPLE (ORB FLUIDI MULTICOLORE) --- */
+        .apple-art-bg {
             position: fixed;
-            top: 0;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -2;
+            background: radial-gradient(circle at 50% 50%, #1a1c29, #08090e);
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            mix-blend-mode: screen;
+            opacity: 0.65;
+            animation: floatAppleArt 20s infinite ease-in-out;
+        }
+
+        /* Sfera Liquida 1 - Neon Cyan */
+        .orb-1 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, #00f2fe 0%, transparent 70%);
+            top: -10%; left: -10%;
+            animation-duration: 18s;
+        }
+
+        /* Sfera Liquida 2 - Apple Purple */
+        .orb-2 {
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, #a18cd1 0%, #fbc2eb 70%);
+            bottom: -20%; right: -10%;
+            animation-duration: 24s;
+            animation-delay: -5s;
+        }
+
+        /* Sfera Liquida 3 - Sunset Orange/Pink */
+        .orb-3 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #ff0844 0%, #ffb199 70%);
+            top: 40%; left: 50%;
+            animation-duration: 22s;
+            animation-delay: -10s;
+        }
+
+        /* Sfera Liquida 4 - Acid Lime */
+        .orb-4 {
+            width: 450px; height: 450px;
+            background: radial-gradient(circle, #00ff87 0%, transparent 70%);
+            bottom: 30%; left: -5%;
+            animation-duration: 16s;
+            animation-delay: -3s;
+        }
+
+        @keyframes floatAppleArt {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(70px, -60px) scale(1.12) rotate(120deg); }
+            66% { transform: translate(-50px, 40px) scale(0.92) rotate(240deg); }
+            100% { transform: translate(0, 0) scale(1) rotate(360deg); }
+        }
+
+        /* --- BARRA DI NAVIGAZIONE VETRO ULTRA LUCIDO --- */
+        header {
+            width: 90%;
+            max-width: 720px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
+            position: fixed;
+            top: 25px;
             z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 35px;
+            box-shadow: var(--liquid-shadow);
             display: flex;
             justify-content: center;
-            transition: all 0.3s ease;
+            transition: var(--squishy-transition);
+        }
+
+        header:hover {
+            transform: translateY(2px) scale(0.99);
+            background: rgba(255, 255, 255, 0.55);
         }
 
         .nav-container {
-            width: 90%;
-            max-width: 1000px;
+            width: 95%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 0;
+            padding: 12px 0;
         }
 
         .logo {
             font-size: 19px;
-            font-weight: 600;
+            font-weight: 800;
             letter-spacing: -0.5px;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
+            color: #1d1d1f;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
+            padding-left: 12px;
+        }
+
+        .logo-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--btn-gradient);
+            border-radius: 50%;
         }
 
         nav ul {
@@ -94,20 +157,17 @@
             display: flex;
             margin: 0;
             padding: 0;
-            gap: 8px;
-            background: rgba(0, 0, 0, 0.04);
-            padding: 4px;
-            border-radius: 30px;
+            gap: 4px;
         }
 
         nav ul li a {
             text-decoration: none;
             color: var(--text-secondary);
             font-size: 14px;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 20px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 25px;
+            transition: var(--squishy-transition);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -115,61 +175,84 @@
         }
 
         nav ul li a:hover {
-            color: var(--text-main);
+            color: #000;
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(1.08);
+        }
+
+        nav ul li a:active {
+            transform: scale(0.9);
         }
 
         nav ul li a.active {
-            background: #ffffff;
-            color: var(--accent);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            background: rgba(255, 255, 255, 0.8);
+            color: #0071e3;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.9);
         }
 
-        /* --- CONTENITORE PRINCIPALE --- */
+        /* --- CONTENITORE SCHEDE --- */
         main {
-            margin-top: 110px;
+            margin-top: 140px;
             width: 90%;
-            max-width: 850px;
+            max-width: 800px;
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding-bottom: 60px;
-            animation: pageReveal 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        /* --- SCHEDE CONTENUTO --- */
         .tab-content {
             display: none;
-            background: var(--card-bg);
+            background: var(--glass-bg);
             padding: 45px;
             border-radius: var(--border-radius);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            backdrop-filter: var(--blur-effect);
-            -webkit-backdrop-filter: var(--blur-effect);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--liquid-shadow);
+            position: relative;
+        }
+
+        /* Linea di riflesso liquido superiore */
+        .tab-content::before {
+            content: "";
+            position: absolute;
+            top: 1px; left: 4%; width: 92%; height: 30px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
+            border-radius: var(--border-radius);
+            pointer-events: none;
         }
 
         .tab-content.active {
             display: block;
-            animation: tabSwitch 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation: squishyReveal 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+        }
+
+        @keyframes squishyReveal {
+            0% { opacity: 0; transform: scale(0.92) translateY(35px); }
+            65% { transform: scale(1.02) translateY(-4px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         h1 {
-            font-size: 38px;
-            font-weight: 700;
-            letter-spacing: -1.2px;
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
             margin-top: 0;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
+            color: #1d1d1f;
         }
 
         p {
             font-size: 18px;
             color: var(--text-secondary);
             line-height: 1.6;
-            margin-bottom: 25px;
+            font-weight: 500;
         }
 
-        /* --- PULSANTI MODERNI E ANIMATI --- */
+        /* --- BOTTONI MULTI-SQUISHY GELATINOSI --- */
         .button-group {
             display: flex;
             gap: 16px;
@@ -182,114 +265,137 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            background: var(--accent-gradient);
+            background: var(--btn-gradient);
             color: white;
-            padding: 14px 28px;
-            border-radius: 24px;
+            padding: 16px 32px;
+            border-radius: 26px;
             text-decoration: none;
             font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.25);
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,113,227,0.25);
+            box-shadow: 0 10px 25px rgba(0, 113, 227, 0.25),
+                        inset 0 2px 4px rgba(255,255,255,0.4);
+            transition: var(--squishy-transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -50%; width: 200%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-25deg);
+            transition: 0.8s;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,113,227,0.4);
-            filter: brightness(1.05);
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 18px 35px rgba(0, 113, 227, 0.4);
         }
 
-        .btn:active {
-            transform: translateY(0);
-        }
+        .btn:hover::after { left: 125%; }
+        .btn:active { transform: scale(0.86) translateY(3px); }
 
         .btn-secondary {
-            background: rgba(0, 0, 0, 0.05);
-            color: var(--text-main);
-            box-shadow: none;
+            background: rgba(255, 255, 255, 0.5);
+            color: #1d1d1f;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03), inset 0 1px 2px white;
         }
 
         .btn-secondary:hover {
-            background: rgba(0, 0, 0, 0.08);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            color: var(--accent);
+            background: rgba(255, 255, 255, 0.85);
+            color: #0071e3;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
         }
 
-        .btn-pulse {
-            animation: pulseGlow 2.5s infinite ease-in-out;
-        }
-
-        /* --- CONTENITORI EMBED (MEDIA PLAYER REATTIVI) --- */
+        /* --- PLAYER INTERNI LIQUID GLASS (EFFETTO GOCCIA DI VETRO SUL RECIPIENTE) --- */
         .media-container {
             position: relative;
             width: 100%;
-            border-radius: 16px;
+            border-radius: 28px;
             overflow: hidden;
-            background: #000;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-            margin-top: 25px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
+            background: var(--glass-media-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--media-shadow);
+            margin: 35px 0;
+            transition: var(--squishy-transition);
+        }
+
+        /* Finto riflesso bagnato specifico per i pannelli video/media */
+        .media-container::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            box-shadow: inset 0 12px 24px rgba(255, 255, 255, 0.35), 
+                        inset 0 -8px 20px rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            z-index: 5;
         }
 
         .media-container:hover {
-            transform: scale(1.01);
+            transform: scale(1.03) translateY(-3px) rotate(0.3deg);
+            background: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.22);
         }
 
-        /* Rapporto 16:9 per Video e PowerPoint */
-        .ratio-16-9 {
-            padding-top: 56.25%;
-        }
-
-        /* Rapporto A4 verticale per il Copione */
-        .ratio-a4 {
-            padding-top: 120%;
-        }
+        .ratio-16-9 { padding-top: 56.25%; }
+        .ratio-a4 { padding-top: 125%; }
 
         .media-container iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             border: none;
+            z-index: 2;
+            mix-blend-mode: normal;
         }
 
         /* --- FOOTER --- */
         footer {
             width: 100%;
             text-align: center;
-            padding: 30px 0;
+            padding: 35px 0;
             font-size: 13px;
-            color: var(--text-secondary);
-            border-top: 1px solid rgba(0,0,0,0.04);
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: var(--blur-effect);
+            color: rgba(255, 255, 255, 0.6);
+            border-top: 1px solid rgba(255,255,255,0.15);
+            background: rgba(12, 13, 20, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             margin-top: auto;
         }
 
         footer a {
-            color: var(--accent);
+            color: #5ac8fa;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
+            transition: var(--squishy-transition);
+            display: inline-block;
         }
 
         footer a:hover {
-            text-decoration: underline;
+            transform: scale(1.15);
+            color: #00f2fe;
         }
 
-        /* SVG Icon Helpers */
         .icon {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             fill: currentColor;
         }
     </style>
 </head>
 <body>
+
+    <div class="apple-art-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
 
     <svg style="display: none;">
         <symbol id="icon-home" viewBox="0 0 24 24">
@@ -307,15 +413,12 @@
         <symbol id="icon-download" viewBox="0 0 24 24">
             <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
         </symbol>
-        <symbol id="icon-external" viewBox="0 0 24 24">
-            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
-        </symbol>
     </svg>
 
     <header>
         <div class="nav-container">
             <div class="logo">
-                <svg class="icon" style="fill: url(#accent-gradient);"><use href="#icon-home"/></svg>
+                <div class="logo-dot"></div>
                 Progetto Autentico
             </div>
             <nav>
@@ -334,10 +437,10 @@
         <section id="home" class="tab-content active">
             <h1>Compito Autentico</h1>
             <p>Salve, io mi chiamo Francesco A. Caruso e questa pagina web è interamente dedicata al mio Compito Autentico.</p>
-            <p>Esplora le varie sezioni interattive utilizzando il menu in alto o i pulsanti rapidi qui sotto:</p>
+            <p>Naviga tra i vari elementi gelatinosi multimediali utilizzando i tasti morbidi che trovi qui sotto:</p>
             
             <div class="button-group">
-                <button class="btn btn-pulse" onclick="openTab('video')">
+                <button class="btn" onclick="openTab('video')">
                     <svg class="icon"><use href="#icon-video"/></svg>Guarda il Video
                 </button>
                 <button class="btn btn-secondary" onclick="openTab('powerpoint')">
@@ -351,7 +454,7 @@
 
         <section id="video" class="tab-content">
             <h1>Il Video del Progetto</h1>
-            <p>Guarda il file video ufficiale incorporato direttamente da YouTube, oppure scaricalo sul tuo dispositivo tramite Google Drive.</p>
+            <p>Visiona il contenuto video integrato nella vetratura liquida tramite YouTube, oppure scaricalo direttamente sul tuo Cloud.</p>
             
             <div class="media-container ratio-16-9">
                 <iframe src="https://www.youtube.com/embed/LIw89Dn2Wh0" allowfullscreen></iframe>
@@ -366,7 +469,7 @@
 
         <section id="powerpoint" class="tab-content">
             <h1>Presentazione PowerPoint</h1>
-            <p>Sfoglia le diapositive interattive di Canva direttamente nel riquadro, oppure scarica la presentazione originale.</p>
+            <p>Sfoglia le diapositive Canva direttamente all'interno della goccia di vetro interattiva o avvia il download locale del file .pptx.</p>
             
             <div class="media-container ratio-16-9">
                 <iframe src="https://canva.link/c4gfqf9lt2fyncr" allowfullscreen></iframe>
@@ -381,7 +484,7 @@
 
         <section id="copione" class="tab-content">
             <h1>Il Copione del Progetto</h1>
-            <p>Leggi e scorri il testo del copione completo tramite il visualizzatore integrato, oppure effettua il download del documento.</p>
+            <p>Leggi il testo integrale direttamente dall'anteprima immersiva o scarica la copia digitale sul tuo dispositivo.</p>
             
             <div class="media-container ratio-a4">
                 <iframe src="https://drive.google.com/file/d/1mr6TzeUL1gl80cYOzUZwlCozXcrSW9B3/preview"></iframe>
@@ -389,7 +492,7 @@
             
             <div class="button-group">
                 <a href="https://drive.google.com/file/d/1mr6TzeUL1gl80cYOzUZwlCozXcrSW9B3/view?usp=sharing" target="_blank" class="btn">
-                    <svg class="icon"><use href="#icon-download"/></svg>Scarica il Copione completo (PDF)
+                    <svg class="icon"><use href="#icon-download"/></svg>Scarica il Copione (PDF)
                 </a>
             </div>
         </section>
@@ -398,25 +501,21 @@
 
     <footer>
         <div>
-            © 2026 Progetto Autentico di Francesco A. Caruso — Email: <a href="mailto:progettoautentico.francescocaruso@outlook.com">progettoautentico.francescocaruso@outlook.com</a>
+            © 2026 Progetto Autentico di Francesco A. Caruso — Email di supporto: <a href="mailto:progettoautentico.francescocaruso@outlook.com">progettoautentico.francescocaruso@outlook.com</a>
         </div>
     </footer>
 
     <script>
         function openTab(tabId) {
-            // Nascondi tutte le schede con dissolvenza
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => content.classList.remove('active'));
 
-            // Rimuovi lo stato attivo dai link
             const links = document.querySelectorAll('nav ul li a');
             links.forEach(link => link.classList.remove('active'));
 
-            // Attiva la scheda e il link selezionato
             document.getElementById(tabId).classList.add('active');
             document.getElementById('link-' + tabId).classList.add('active');
             
-            // Ritorna in cima alla pagina fluidamente
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
     </script>
