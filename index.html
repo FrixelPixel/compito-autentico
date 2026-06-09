@@ -5,23 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Progetto Autentico - Francesco A. Caruso</title>
     <style>
-        /* --- CONFIGURAZIONE LIQUID GLASS ULTRA & APPLE ART --- */
+        /* --- PROPRIETÀ BASE E VARIABILI DI SQUISHY --- */
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.45);
-            --glass-media-bg: rgba(255, 255, 255, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --glass-highlight: rgba(255, 255, 255, 0.8);
-            --text-main: #1d1d1f;
-            --text-secondary: #424245;
-            --accent-gradient: linear-gradient(135deg, #ff2d55, #ff9500, #4cd964, #5ac8fa, #007aff, #5856d6);
-            --btn-gradient: linear-gradient(135deg, #0071e3, #34aadc);
-            --liquid-shadow: 0 25px 60px rgba(0, 0, 0, 0.1), 
-                             inset 0 1px 0 var(--glass-highlight),
-                             inset 0 -3px 15px rgba(255,255,255,0.4);
-            --media-shadow: 0 15px 35px rgba(0, 0, 0, 0.15),
-                            inset 0 1px 2px rgba(255,255,255,0.6),
-                            inset 0 -5px 20px rgba(255,255,255,0.2);
             --squishy-transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --btn-gradient: linear-gradient(135deg, #0071e3, #34aadc);
+        }
+
+        /* --- CONFIGURAZIONE TEMA LIGHT (AUTOMATICO) --- */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --body-bg: #f5f5f7;
+                --glass-bg: rgba(255, 255, 255, 0.45);
+                --glass-media-bg: rgba(255, 255, 255, 0.25);
+                --glass-border: rgba(255, 255, 255, 0.6);
+                --glass-highlight: rgba(255, 255, 255, 0.8);
+                --text-main: #1d1d1f;
+                --text-secondary: #515154;
+                --liquid-shadow: 0 25px 60px rgba(0, 0, 0, 0.06), 
+                                 inset 0 1px 0 var(--glass-highlight),
+                                 inset 0 -3px 15px rgba(255,255,255,0.4);
+                --media-shadow: 0 15px 35px rgba(0, 0, 0, 0.08),
+                                inset 0 1px 2px rgba(255,255,255,0.6);
+                --orb-opacity: 0.5;
+                --orb-blend: multiply;
+                --color-orb-1: #7cdff3;
+                --color-orb-2: #fbc2eb;
+                --color-orb-3: #ffeba1;
+                --color-orb-4: #a8ffb2;
+                --footer-bg: rgba(255, 255, 255, 0.6);
+                --footer-text: #6e6e73;
+            }
+        }
+
+        /* --- CONFIGURAZIONE TEMA DARK (AUTOMATICO) --- */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --body-bg: #0c0d14;
+                --glass-bg: rgba(30, 30, 35, 0.45);
+                --glass-media-bg: rgba(20, 20, 25, 0.25);
+                --glass-border: rgba(255, 255, 255, 0.15);
+                --glass-highlight: rgba(255, 255, 255, 0.2);
+                --text-main: #f5f5f7;
+                --text-secondary: #86868b;
+                --liquid-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 
+                                 inset 0 1px 0 var(--glass-highlight),
+                                 inset 0 -3px 15px rgba(255,255,255,0.05);
+                --media-shadow: 0 15px 35px rgba(0, 0, 0, 0.5),
+                                inset 0 1px 1px rgba(255,255,255,0.1);
+                --orb-opacity: 0.45;
+                --orb-blend: screen;
+                --color-orb-1: #00f2fe;
+                --color-orb-2: #a18cd1;
+                --color-orb-3: #ff0844;
+                --color-orb-4: #00ff87;
+                --footer-bg: rgba(12, 13, 20, 0.8);
+                --footer-text: #86868b;
+            }
         }
 
         * {
@@ -31,7 +70,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #0c0d14; /* Sfondo scuro di base per far risaltare l'arte Apple */
+            background-color: var(--body-bg);
             color: var(--text-main);
             margin: 0;
             padding: 0;
@@ -41,69 +80,67 @@
             align-items: center;
             overflow-x: hidden;
             position: relative;
+            transition: background-color 0.5s ease;
         }
 
-        /* --- SFONDO ARTISTICO ASTRATTO STILE APPLE (ORB FLUIDI MULTICOLORE) --- */
+        /* --- SFONDO INTERATTIVO APPLE ART --- */
         .apple-art-bg {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -2;
-            background: radial-gradient(circle at 50% 50%, #1a1c29, #08090e);
             overflow: hidden;
+            pointer-events: none;
         }
 
         .orb {
             position: absolute;
             border-radius: 50%;
             filter: blur(90px);
-            mix-blend-mode: screen;
-            opacity: 0.65;
-            animation: floatAppleArt 20s infinite ease-in-out;
+            mix-blend-mode: var(--orb-blend);
+            opacity: var(--orb-opacity);
+            animation: floatAppleArt 22s infinite ease-in-out;
+            transition: background 0.8s ease, opacity 0.8s ease;
         }
 
-        /* Sfera Liquida 1 - Neon Cyan */
         .orb-1 {
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, #00f2fe 0%, transparent 70%);
-            top: -10%; left: -10%;
+            width: 650px; height: 650px;
+            background: radial-gradient(circle, var(--color-orb-1) 0%, transparent 70%);
+            top: -15%; left: -10%;
             animation-duration: 18s;
         }
 
-        /* Sfera Liquida 2 - Apple Purple */
         .orb-2 {
-            width: 700px; height: 700px;
-            background: radial-gradient(circle, #a18cd1 0%, #fbc2eb 70%);
+            width: 750px; height: 750px;
+            background: radial-gradient(circle, var(--color-orb-2) 0%, transparent 70%);
             bottom: -20%; right: -10%;
-            animation-duration: 24s;
+            animation-duration: 26s;
             animation-delay: -5s;
         }
 
-        /* Sfera Liquida 3 - Sunset Orange/Pink */
         .orb-3 {
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, #ff0844 0%, #ffb199 70%);
-            top: 40%; left: 50%;
+            width: 550px; height: 550px;
+            background: radial-gradient(circle, var(--color-orb-3) 0%, transparent 70%);
+            top: 35%; left: 45%;
             animation-duration: 22s;
-            animation-delay: -10s;
+            animation-delay: -11s;
         }
 
-        /* Sfera Liquida 4 - Acid Lime */
         .orb-4 {
-            width: 450px; height: 450px;
-            background: radial-gradient(circle, #00ff87 0%, transparent 70%);
-            bottom: 30%; left: -5%;
+            width: 480px; height: 480px;
+            background: radial-gradient(circle, var(--color-orb-4) 0%, transparent 70%);
+            bottom: 25%; left: -5%;
             animation-duration: 16s;
             animation-delay: -3s;
         }
 
         @keyframes floatAppleArt {
             0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            33% { transform: translate(70px, -60px) scale(1.12) rotate(120deg); }
-            66% { transform: translate(-50px, 40px) scale(0.92) rotate(240deg); }
+            33% { transform: translate(60px, -50px) scale(1.1) rotate(120deg); }
+            66% { transform: translate(-40px, 40px) scale(0.95) rotate(240deg); }
             100% { transform: translate(0, 0) scale(1) rotate(360deg); }
         }
 
-        /* --- BARRA DI NAVIGAZIONE VETRO ULTRA LUCIDO --- */
+        /* --- BARRA DI NAVIGAZIONE --- */
         header {
             width: 90%;
             max-width: 720px;
@@ -118,12 +155,11 @@
             box-shadow: var(--liquid-shadow);
             display: flex;
             justify-content: center;
-            transition: var(--squishy-transition);
+            transition: var(--squishy-transition), background 0.5s ease, border 0.5s ease;
         }
 
         header:hover {
             transform: translateY(2px) scale(0.99);
-            background: rgba(255, 255, 255, 0.55);
         }
 
         .nav-container {
@@ -138,7 +174,7 @@
             font-size: 19px;
             font-weight: 800;
             letter-spacing: -0.5px;
-            color: #1d1d1f;
+            color: var(--text-main);
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -175,20 +211,16 @@
         }
 
         nav ul li a:hover {
-            color: #000;
-            background: rgba(255, 255, 255, 0.35);
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.2);
             transform: scale(1.08);
         }
 
-        nav ul li a:active {
-            transform: scale(0.9);
-        }
-
         nav ul li a.active {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.7);
             color: #0071e3;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.9);
+            border: 1px solid rgba(255,255,255,0.5);
         }
 
         /* --- CONTENITORE SCHEDE --- */
@@ -207,21 +239,21 @@
             display: none;
             background: var(--glass-bg);
             padding: 45px;
-            border-radius: var(--border-radius);
+            border-radius: 32px;
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             border: 1px solid var(--glass-border);
             box-shadow: var(--liquid-shadow);
             position: relative;
+            transition: background 0.5s ease, border 0.5s ease;
         }
 
-        /* Linea di riflesso liquido superiore */
         .tab-content::before {
             content: "";
             position: absolute;
             top: 1px; left: 4%; width: 92%; height: 30px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
-            border-radius: var(--border-radius);
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+            border-radius: 32px;
             pointer-events: none;
         }
 
@@ -242,7 +274,7 @@
             letter-spacing: -1.5px;
             margin-top: 0;
             margin-bottom: 15px;
-            color: #1d1d1f;
+            color: var(--text-main);
         }
 
         p {
@@ -252,7 +284,7 @@
             font-weight: 500;
         }
 
-        /* --- BOTTONI MULTI-SQUISHY GELATINOSI --- */
+        /* --- BOTTONI MULTI-SQUISHY --- */
         .button-group {
             display: flex;
             gap: 16px;
@@ -299,19 +331,18 @@
         .btn:active { transform: scale(0.86) translateY(3px); }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.5);
-            color: #1d1d1f;
+            background: rgba(255, 255, 255, 0.4);
+            color: var(--text-main);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.03), inset 0 1px 2px white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.7);
             color: #0071e3;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
         }
 
-        /* --- PLAYER INTERNI LIQUID GLASS (EFFETTO GOCCIA DI VETRO SUL RECIPIENTE) --- */
+        /* --- CORNICI MEDIA IN VETRO TRASPARENTE --- */
         .media-container {
             position: relative;
             width: 100%;
@@ -323,24 +354,21 @@
             border: 1px solid var(--glass-border);
             box-shadow: var(--media-shadow);
             margin: 35px 0;
-            transition: var(--squishy-transition);
+            transition: var(--squishy-transition), background 0.5s ease, border 0.5s ease;
         }
 
-        /* Finto riflesso bagnato specifico per i pannelli video/media */
         .media-container::before {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            box-shadow: inset 0 12px 24px rgba(255, 255, 255, 0.35), 
-                        inset 0 -8px 20px rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 12px 24px rgba(255, 255, 255, 0.15);
             pointer-events: none;
             z-index: 5;
         }
 
         .media-container:hover {
-            transform: scale(1.03) translateY(-3px) rotate(0.3deg);
+            transform: scale(1.02) translateY(-2px);
             background: rgba(255, 255, 255, 0.35);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.22);
         }
 
         .ratio-16-9 { padding-top: 56.25%; }
@@ -351,7 +379,6 @@
             top: 0; left: 0; width: 100%; height: 100%;
             border: none;
             z-index: 2;
-            mix-blend-mode: normal;
         }
 
         /* --- FOOTER --- */
@@ -360,16 +387,17 @@
             text-align: center;
             padding: 35px 0;
             font-size: 13px;
-            color: rgba(255, 255, 255, 0.6);
-            border-top: 1px solid rgba(255,255,255,0.15);
-            background: rgba(12, 13, 20, 0.6);
+            color: var(--footer-text);
+            border-top: 1px solid var(--glass-border);
+            background: var(--footer-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             margin-top: auto;
+            transition: background 0.5s ease, color 0.5s ease, border 0.5s ease;
         }
 
         footer a {
-            color: #5ac8fa;
+            color: #0071e3;
             text-decoration: none;
             font-weight: 600;
             transition: var(--squishy-transition);
@@ -378,7 +406,6 @@
 
         footer a:hover {
             transform: scale(1.15);
-            color: #00f2fe;
         }
 
         .icon {
@@ -390,6 +417,7 @@
 </head>
 <body>
 
+    <!-- ARTE ASTRATTA STILE APPLE CAMALEONTICA -->
     <div class="apple-art-bg">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
@@ -397,6 +425,7 @@
         <div class="orb orb-4"></div>
     </div>
 
+    <!-- STRUTTURA DELLE ICONE -->
     <svg style="display: none;">
         <symbol id="icon-home" viewBox="0 0 24 24">
             <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
@@ -415,6 +444,7 @@
         </symbol>
     </svg>
 
+    <!-- HEADER SQUISHY -->
     <header>
         <div class="nav-container">
             <div class="logo">
@@ -432,8 +462,10 @@
         </div>
     </header>
 
+    <!-- CONTENUTI -->
     <main>
         
+        <!-- INTRODUZIONE -->
         <section id="home" class="tab-content active">
             <h1>Compito Autentico</h1>
             <p>Salve, io mi chiamo Francesco A. Caruso e questa pagina web è interamente dedicata al mio Compito Autentico.</p>
@@ -452,6 +484,7 @@
             </div>
         </section>
 
+        <!-- SEZIONE: VIDEO -->
         <section id="video" class="tab-content">
             <h1>Il Video del Progetto</h1>
             <p>Visiona il contenuto video integrato nella vetratura liquida tramite YouTube, oppure scaricalo direttamente sul tuo Cloud.</p>
@@ -467,12 +500,14 @@
             </div>
         </section>
 
+        <!-- SEZIONE: POWERPOINT -->
         <section id="powerpoint" class="tab-content">
             <h1>Presentazione PowerPoint</h1>
             <p>Sfoglia le diapositive Canva direttamente all'interno della goccia di vetro interattiva o avvia il download locale del file .pptx.</p>
             
             <div class="media-container ratio-16-9">
-                <iframe src="https://canva.link/c4gfqf9lt2fyncr" allowfullscreen></iframe>
+                <!-- Link di Embed corretto e aggiornato della tua presentazione Canva -->
+                <iframe src="https://www.canva.com/design/DAHKNSf_bH0/pzAIoM7n_RsgoRp5Bmjl6g/view?embed" allowfullscreen></iframe>
             </div>
             
             <div class="button-group">
@@ -482,11 +517,13 @@
             </div>
         </section>
 
+        <!-- SEZIONE: COPIONE -->
         <section id="copione" class="tab-content">
             <h1>Il Copione del Progetto</h1>
             <p>Leggi il testo integrale direttamente dall'anteprima immersiva o scarica la copia digitale sul tuo dispositivo.</p>
             
             <div class="media-container ratio-a4">
+                <!-- Link per visualizzare l'anteprima corretta del PDF caricato su Google Drive -->
                 <iframe src="https://drive.google.com/file/d/1mr6TzeUL1gl80cYOzUZwlCozXcrSW9B3/preview"></iframe>
             </div>
             
@@ -499,6 +536,7 @@
 
     </main>
 
+    <!-- FOOTER ADATTIVO -->
     <footer>
         <div>
             © 2026 Progetto Autentico di Francesco A. Caruso — Email di supporto: <a href="mailto:progettoautentico.francescocaruso@outlook.com">progettoautentico.francescocaruso@outlook.com</a>
