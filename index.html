@@ -15,12 +15,14 @@
             --text-body: #495057;
             
             /* Accenti di Progettazione */
-            --accent-tech: #e65f2b; /* Arancione Industriale Opaco */
+            --accent-tech: #e65f2b; 
             --accent-subtle: rgba(230, 95, 43, 0.08);
             --led-ready: #28a745;
+            --terminal-dark: #111418;
             
-            /* Curva cinematica ultra-pulita per i movimenti hardware-like */
+            /* Curva cinematica ultra-pulita */
             --panel-transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            --easter-egg-fade: background-color 0.8s ease, color 0.8s ease;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -36,9 +38,14 @@
             }
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
+        /* LOOK TRASFORMATO DALL'EASTER EGG */
+        body.terminal-mode {
+            --bg-canvas: #090a0f;
+            --block-bg: #111418;
+            --block-border: #ff7a45;
+            --text-title: #33ff33; /* Verde fosforo CRT */
+            --text-body: #88c0d0;
+            --grid-line: rgba(51, 255, 51, 0.02);
         }
 
         body {
@@ -49,45 +56,29 @@
                 linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
             background-size: 24px 24px;
             color: var(--text-body);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column;
+            min-height: 100vh; overflow-x: hidden;
+            transition: var(--easter-egg-fade);
         }
 
         /* --- ARCHITETTURA HEADER --- */
         header {
-            width: 100%;
-            background: var(--block-bg);
+            width: 100%; background: var(--block-bg);
             border-bottom: 1px solid var(--block-border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            position: sticky; top: 0; z-index: 1000;
+            transition: var(--easter-egg-fade);
         }
 
         .nav-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 24px;
-            height: 75px;
-            position: relative;
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 24px; height: 75px; position: relative;
         }
 
-        /* BARRA DI CARICAMENTO INTEGRATA (LINEA DI TRANSIZIONE ANIMATA) */
         #loading-bar {
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            height: 2px;
-            width: 0%;
-            background: var(--accent-tech);
-            z-index: 1001;
-            transition: none;
+            position: absolute; bottom: -1px; left: 0; height: 2px; width: 0%;
+            background: var(--accent-tech); z-index: 1001; transition: none;
         }
 
         @keyframes networkFlash {
@@ -97,95 +88,48 @@
         }
 
         .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-title);
+            display: flex; align-items: center; gap: 12px;
+            font-size: 13px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1.5px; color: var(--text-title);
         }
 
-        .status-dot {
-            width: 7px;
-            height: 7px;
-            background-color: var(--led-ready);
-            border-radius: 50%;
-            display: inline-block;
-        }
+        .status-dot { width: 7px; height: 7px; background-color: var(--led-ready); border-radius: 50%; display: inline-block; }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            margin: 0;
-            padding: 0;
-            height: 75px;
-            gap: 4px;
-        }
-
+        nav ul { list-style: none; display: flex; margin: 0; padding: 0; height: 75px; gap: 4px; }
         nav ul li { display: flex; }
-
         nav ul li a {
-            text-decoration: none;
-            color: var(--text-body);
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: var(--panel-transition);
-            position: relative;
+            text-decoration: none; color: var(--text-body); font-size: 11px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px; padding: 0 16px;
+            display: flex; align-items: center; gap: 6px; cursor: pointer;
+            transition: var(--panel-transition); position: relative;
         }
 
         nav ul li a:hover { color: var(--text-title); }
         nav ul li a.active { color: var(--accent-tech); }
-
         nav ul li a::after {
-            content: "";
-            position: absolute;
-            bottom: -1px; left: 20px; right: 20px;
-            height: 2px;
-            background: var(--accent-tech);
-            transform: scaleX(0);
-            transition: var(--panel-transition);
+            content: ""; position: absolute; bottom: -1px; left: 16px; right: 16px;
+            height: 2px; background: var(--accent-tech); transform: scaleX(0); transition: var(--panel-transition);
         }
+        nav ul li a.active::after { transform: scaleX(1); }
 
-        nav ul li a.active::after {
-            transform: scaleX(1);
-        }
+        #m-admin { border-left: 1px dashed var(--block-border); color: #888; }
+        #m-admin.unlocked { color: var(--accent-tech); font-weight: 700; }
 
         /* --- BLOCCHI CONTENUTO ANIMATI --- */
-        main {
-            max-width: 850px;
-            width: 90%;
-            margin: 60px auto;
-            flex: 1;
-            position: relative;
-        }
+        main { max-width: 900px; width: 95%; margin: 40px auto; flex: 1; position: relative; }
 
         .document-block {
-            display: none;
-            background: var(--block-bg);
-            border: 1px solid var(--block-border);
-            padding: 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.01);
-            position: relative;
-            opacity: 0;
+            display: none; background: var(--block-bg); border: 1px solid var(--block-border);
+            padding: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.01); position: relative; opacity: 0;
+            transition: var(--easter-egg-fade);
         }
 
         .document-block.active {
-            display: block;
-            animation: blockEnter 0.45s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
+            display: block; animation: blockEnter 0.45s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
         }
 
         .document-block.leaving {
-            display: block;
-            animation: blockExit 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
+            display: block; animation: blockExit 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
         }
 
         @keyframes blockEnter {
@@ -199,301 +143,177 @@
         }
 
         .block-id {
-            position: absolute;
-            top: 20px; right: 25px;
-            font-size: 10px;
-            font-family: monospace;
-            color: var(--block-border);
-            letter-spacing: 1px;
+            position: absolute; top: 20px; right: 25px; font-size: 10px;
+            font-family: monospace; color: var(--text-body); opacity: 0.4; letter-spacing: 1px;
         }
 
-        h1 {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-title);
-            margin-top: 0;
-            margin-bottom: 24px;
-            letter-spacing: -0.5px;
-        }
+        h1 { font-size: 24px; font-weight: 700; color: var(--text-title); margin-top: 0; margin-bottom: 24px; letter-spacing: -0.5px; }
+        h2 { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; color: var(--text-title); }
+        p { font-size: 15px; line-height: 1.7; margin-bottom: 20px; }
 
-        p {
-            font-size: 15px;
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        /* --- SEZIONE BOTTONI & GRIGLIE NAVIGAZIONE --- */
-        .btn-container { display: flex; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
-        
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            margin-top: 35px;
-        }
+        /* --- COMPONENTI INTERFACCIA ED ELENCHI --- */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 35px; }
 
         .btn-blueprint {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: var(--text-title);
-            color: var(--block-bg);
-            border: none;
-            padding: 15px 30px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: var(--panel-transition);
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            background: var(--text-title); color: var(--block-bg); border: none; padding: 14px 24px;
+            font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            cursor: pointer; transition: var(--panel-transition);
         }
 
         .btn-blueprint:hover { background: var(--accent-tech); color: white; transform: translateY(-1px); }
-        .btn-blueprint:active { transform: translateY(0); }
         .btn-outline { background: transparent; color: var(--text-body); border: 1px solid var(--block-border); }
-        .btn-outline:hover { background: var(--bg-canvas); border-color: var(--text-title); color: var(--text-title); }
         
-        .btn-home-back {
-            margin-top: 40px;
-            border-top: 1px dashed var(--block-border);
-            padding-top: 30px;
-            display: flex;
-            justify-content: flex-start;
+        .btn-home-back { margin-top: 40px; border-top: 1px dashed var(--block-border); padding-top: 30px; display: flex; justify-content: flex-start; }
+
+        /* --- BLOCCO LOGS E ANNUNCI --- */
+        .announcement-container { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+        .announcement-card {
+            background: var(--bg-canvas); border-left: 3px solid var(--text-title); padding: 20px;
+            position: relative; transition: var(--panel-transition);
         }
-
-        /* --- INTERFACCIA DEL FORM --- */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-top: 35px;
-        }
-
-        .form-cell { display: flex; flex-direction: column; gap: 8px; }
-        .cell-full { grid-column: span 2; }
-
-        .form-cell label {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-title);
-        }
-
-        .form-cell input, .form-cell textarea {
-            background: var(--bg-canvas);
-            border: 1px solid var(--block-border);
-            color: var(--text-title);
-            padding: 14px 16px;
-            font-size: 14px;
-            border-radius: 0;
-            outline: none;
-            transition: var(--panel-transition);
-        }
-
-        .form-cell input:focus, .form-cell textarea:focus {
-            border-color: var(--text-title);
-            background: var(--block-bg);
-        }
-
-        .form-cell textarea { min-height: 140px; resize: vertical; }
-
-        .scout-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            user-select: none;
-            padding: 4px 0;
-        }
-
-        .scout-checkbox input { display: none; }
-
-        .box-blueprint {
-            width: 18px;
-            height: 18px;
-            border: 1px solid var(--block-border);
-            background: var(--bg-canvas);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--panel-transition);
-        }
-
-        .scout-checkbox input:checked + .box-blueprint {
-            background: var(--text-title);
-            border-color: var(--text-title);
-        }
-
-        .box-blueprint::after {
-            content: "";
-            width: 4px;
-            height: 8px;
-            border: solid var(--block-bg);
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
-            display: none;
-        }
-
-        .scout-checkbox input:checked + .box-blueprint::after { display: block; }
-
-        /* --- CONTENITORI MULTIMEDIALI --- */
+        .announcement-card.tech-alert { border-left-color: var(--accent-tech); }
+        .announcement-meta { font-family: monospace; font-size: 11px; color: var(--accent-tech); margin-bottom: 6px; }
+        .announcement-title { font-weight: 700; font-size: 15px; color: var(--text-title); margin-bottom: 4px; }
+        
+        /* --- CONTENITORI MULTIMEDIALI INTERNI --- */
         .media-dock { width: 100%; border: 1px solid var(--block-border); background: var(--bg-canvas); position: relative; margin: 30px 0; }
         .frame-16-9 { padding-top: 56.25%; }
-        .frame-a4 { padding-top: 130%; }
-
+        .frame-a4 { padding-top: 130%; } 
         .media-dock iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        /* --- FOOTER DIDATTICO --- */
-        footer {
-            width: 100%; background: var(--block-bg); border-top: 1px solid var(--block-border);
-            padding: 30px 24px; text-align: center; font-size: 11px; letter-spacing: 0.5px; color: var(--text-body); margin-top: auto;
+        /* --- INTERFACCIA FORM DI INPUT --- */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 25px; }
+        .form-grid input, .form-grid textarea, .form-grid select {
+            background: var(--bg-canvas); border: 1px solid var(--block-border); color: var(--text-title);
+            padding: 14px 16px; font-size: 14px; border-radius: 0; outline: none; transition: var(--panel-transition);
         }
+        .form-cell { display: flex; flex-direction: column; gap: 8px; }
+        .cell-full { grid-column: span 2; }
+        .form-cell label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-title); }
+        .form-cell textarea { min-height: 120px; resize: vertical; }
 
-        footer a { color: var(--text-title); text-decoration: none; font-weight: 700; }
-        footer a:hover { color: var(--accent-tech); }
-        .icon-svg { width: 14px; height: 14px; fill: currentColor; }
-
-        /* --- CONTENITORE EASTER EGG --- */
-        #game-container {
-            display: none;
-            background: var(--block-bg);
-            border: 2px dashed var(--accent-tech);
-            padding: 30px;
-            margin-top: 30px;
-            text-align: center;
-            position: relative;
+        /* STILI DEL GIOCO TERMINALE ED ANIMAZIONE DI ENTRATA */
+        #game-container { display: none; margin-top: 25px; animation: terminalPulse 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
+        @keyframes terminalPulse {
+            0% { opacity: 0; transform: scale(0.95); filter: brightness(2); }
+            100% { opacity: 1; transform: scale(1); filter: brightness(1); }
         }
+        .game-status { font-family: monospace; font-size: 12px; letter-spacing: 1px; color: var(--accent-tech); margin-bottom: 10px; font-weight: bold; }
+        #game-canvas { background: #000000; border: 2px solid var(--text-title); display: block; width: 100%; max-width: 600px; height: 150px; box-shadow: 0 0 15px rgba(51,255,51,0.1); }
 
-        #game-canvas {
-            background: var(--bg-canvas);
-            border: 1px solid var(--block-border);
-            display: block;
-            margin: 20px auto;
-            max-width: 100%;
+        /* --- CONSOLE ANALYTICS --- */
+        .terminal-box {
+            background: var(--terminal-dark); color: #c5c6c7; font-family: 'Courier New', Courier, monospace;
+            padding: 24px; margin-top: 24px; font-size: 13px; border-left: 4px solid var(--accent-tech);
         }
+        .terminal-header { color: #f8f9fa; font-weight: 700; border-bottom: 1px solid #22262f; padding-bottom: 8px; margin-bottom: 12px; }
+        .analytics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+        .metric-card { background: var(--bg-canvas); border: 1px solid var(--block-border); padding: 20px; text-align: center; }
+        .metric-value { font-family: monospace; font-size: 28px; font-weight: 700; color: var(--accent-tech); margin-top: 6px; }
 
-        .game-status {
-            font-family: monospace;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent-tech);
-        }
+        footer { width: 100%; background: var(--block-bg); border-top: 1px solid var(--block-border); padding: 30px 24px; text-align: center; font-size: 11px; color: var(--text-body); margin-top: auto; }
     </style>
 </head>
 <body>
 
+    <!-- SVG ICON SET -->
     <svg style="display: none;">
         <symbol id="i-index" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></symbol>
         <symbol id="i-movie" viewBox="0 0 24 24"><path d="M21 6h-7.59l3.29-3.29L16 2l-4 4-4-4-.71.71L10.59 6H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H3V8h18v12zM8 10l7 4-7 4z"/></symbol>
         <symbol id="i-board" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></symbol>
         <symbol id="i-page" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></symbol>
         <symbol id="i-envelope" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></symbol>
+        <symbol id="i-bell" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></symbol>
     </svg>
 
+    <!-- HEADER -->
     <header>
         <div class="nav-container">
             <div id="loading-bar"></div>
             <div class="logo-section">
                 <div class="status-dot"></div>
-                <span>F.A. CARUSO // COMPITO_AUTENTICO</span>
+                <span>F.A. CARUSO // CENTRAL_NODE</span>
             </div>
             <nav>
                 <ul>
                     <li><a onclick="navigate('home')" id="m-home" class="active"><svg class="icon-svg"><use href="#i-index"/></svg>Home</a></li>
+                    <li><a onclick="navigate('annunci')" id="m-annunci"><svg class="icon-svg"><use href="#i-bell"/></svg>Bacheca</a></li>
                     <li><a onclick="navigate('video')" id="m-video"><svg class="icon-svg"><use href="#i-movie"/></svg>Video</a></li>
                     <li><a onclick="navigate('powerpoint')" id="m-powerpoint"><svg class="icon-svg"><use href="#i-board"/></svg>Slides</a></li>
                     <li><a onclick="navigate('copione')" id="m-copione"><svg class="icon-svg"><use href="#i-page"/></svg>Copione</a></li>
                     <li><a onclick="navigate('contatti')" id="m-contatti"><svg class="icon-svg"><use href="#i-envelope"/></svg>Contatti</a></li>
+                    <li><a onclick="triggerAdminAccess()" id="m-admin"><svg class="icon-svg"><use href="#i-lock"/></svg>Console</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
+    <!-- MAIN CONTENT -->
     <main>
+        <!-- HOME -->
         <section id="home" class="document-block active">
-            <div class="block-id">DOC_REF: 001/A</div>
+            <div class="block-id">NODE_REF: 001/HOME</div>
             <h1>Presentazione del Progetto</h1>
-            <p>Benvenuti nell'archivio digitale dedicato al mio Compito Autentico scolastico. Questo spazio è stato progettato per raccogliere, organizzare e presentare in modo chiaro e strutturato tutti i materiali di approfondimento prodotti.</p>
-            
+            <p>Benvenuti nell'archivio di archiviazione dedicato al mio Compito Autentico scolastico. Questo spazio presenta in modo unificato tutta la documentazione prodotta.</p>
+            <div id="home-announcement-target">
+                <p style="font-style: italic; font-size: 14px;">Nessun annuncio caricato nel registro di sistema.</p>
+            </div>
             <div class="dashboard-grid">
-                <button class="btn-blueprint" onclick="navigate('video')">
-                    <svg class="icon-svg" style="fill:white;"><use href="#i-movie"/></svg> Apri Video
-                </button>
-                <button class="btn-blueprint" onclick="navigate('powerpoint')">
-                    <svg class="icon-svg" style="fill:white;"><use href="#i-board"/></svg> Vedi Slides
-                </button>
-                <button class="btn-blueprint" onclick="navigate('copione')">
-                    <svg class="icon-svg" style="fill:white;"><use href="#i-page"/></svg> Leggi Copione
-                </button>
-                <button class="btn-blueprint btn-outline" onclick="navigate('contatti')">
-                    <svg class="icon-svg"><use href="#i-envelope"/></svg> Contatti
-                </button>
+                <button class="btn-blueprint" onclick="navigate('annunci')">Apri Bacheca</button>
+                <button class="btn-blueprint" onclick="navigate('video')">Apri Video</button>
+                <button class="btn-blueprint" onclick="navigate('powerpoint')">Vedi Slides</button>
+                <button class="btn-blueprint btn-outline" onclick="navigate('copione')">Leggi Copione</button>
             </div>
         </section>
 
+        <!-- BACHECA -->
+        <section id="annunci" class="document-block">
+            <div class="block-id">NODE_REF: 002/NEWS</div>
+            <h1>Bacheca Annunci Istituzionali</h1>
+            <div id="bacheca-target" class="announcement-container"></div>
+            <div class="btn-home-back"><button class="btn-blueprint btn-outline" onclick="navigate('home')">Torna alla Home</button></div>
+        </section>
+
+        <!-- VIDEO -->
         <section id="video" class="document-block">
-            <div class="block-id">DOC_REF: 002/V</div>
+            <div class="block-id">NODE_REF: 003/VIDEO</div>
             <h1>Elaborato Video</h1>
-            <div class="media-dock frame-16-9">
-                <iframe src="https://www.youtube.com/embed/LIw89Dn2Wh0" allowfullscreen></iframe>
-            </div>
-            
-            <div class="btn-home-back">
-                <button class="btn-blueprint btn-outline" onclick="navigate('home')">
-                    <svg class="icon-svg"><use href="#i-index"/></svg> Torna alla Home
-                </button>
-            </div>
+            <div class="media-dock frame-16-9"><iframe id="project-video" src="https://www.youtube.com/embed/LIw89Dn2Wh0?enablejsapi=1" allowfullscreen></iframe></div>
+            <div class="btn-home-back"><button class="btn-blueprint btn-outline" onclick="navigate('home')">Torna alla Home</button></div>
         </section>
 
+        <!-- SLIDES -->
         <section id="powerpoint" class="document-block">
-            <div class="block-id">DOC_REF: 003/S</div>
+            <div class="block-id">NODE_REF: 004/SLIDES</div>
             <h1>Supporto Visivo (Diapositive)</h1>
-            <div class="media-dock frame-16-9">
-                <iframe src="https://www.canva.com/design/DAHKNSf_bH0/pzAIoM7n_RsgoRp5Bmjl6g/view?embed" allowfullscreen></iframe>
-            </div>
-            
-            <div class="btn-home-back">
-                <button class="btn-blueprint btn-outline" onclick="navigate('home')">
-                    <svg class="icon-svg"><use href="#i-index"/></svg> Torna alla Home
-                </button>
-            </div>
+            <div class="media-dock frame-16-9"><iframe src="https://www.canva.com/design/DAHKNSf_bH0/pzAIoM7n_RsgoRp5Bmjl6g/view?embed" allowfullscreen></iframe></div>
+            <div class="btn-home-back"><button class="btn-blueprint btn-outline" onclick="navigate('home')">Torna alla Home</button></div>
         </section>
 
+        <!-- COPIONE -->
         <section id="copione" class="document-block">
-            <div class="block-id">DOC_REF: 004/T</div>
-            <h1>Testo Strutturato (Copione)</h1>
-            <div class="media-dock frame-a4">
-                <iframe src="https://docs.google.com/viewer?url=https://drive.google.com/file/d/1H87bqyARRU9Sp3qGJCFzJYM3Zga0ObK0/view?usp=share_link&embedded=true"></iframe>
-            </div>
-            <div class="btn-container">
-                <a href="https://drive.google.com/file/d/INSERISCI_QUI_L_ID_DEL_SECONDO_FILE/view?usp=sharing" target="_blank" class="btn-blueprint" style="text-decoration:none;">
-                    Richiedi Accesso in Modifica
-                </a>
-            </div>
-            
-            <div class="btn-home-back">
-                <button class="btn-blueprint btn-outline" onclick="navigate('home')">
-                    <svg class="icon-svg"><use href="#i-index"/></svg> Torna alla Home
-                </button>
-            </div>
+            <div class="block-id">NODE_REF: 005/SCRIPT</div>
+            <h1>Testo Strutturato (Copione Integrato)</h1>
+            <div class="media-dock frame-a4"><iframe src="https://docs.google.com/viewer?url=https://drive.google.com/file/d/1H87bqyARRU9Sp3qGJCFzJYM3Zga0ObK0/view?usp=share_link&embedded=true"></iframe></div>
+            <div class="btn-container"><a href="https://drive.google.com/uc?export=download&id=1H87bqyARRU9Sp3qGJCFzJYM3Zga0ObK0" class="btn-blueprint">Scarica Copione (.PDF)</a></div>
+            <div class="btn-home-back"><button class="btn-blueprint btn-outline" onclick="navigate('home')">Torna alla Home</button></div>
         </section>
 
+        <!-- CONTATTI + EASTER EGG AVANZATO -->
         <section id="contatti" class="document-block">
-            <div class="block-id">DOC_REF: 005/C</div>
+            <div class="block-id">NODE_REF: 006/MAIL</div>
             <h1>Canale di Comunicazione</h1>
-            <p>Utilizza il modulo sottostante per inoltrare domande o note relative alla documentazione presentata.</p>
             
-            <form class="form-grid" onsubmit="sendForm(event)">
+            <form class="form-grid" id="main-contact-form" onsubmit="sendForm(event)">
                 <div class="form-cell">
                     <label>Nome</label>
-                    <input type="text" id="in-name" required placeholder="Inserisci il tuo nome" oninput="checkEasterEgg(this.value)">
+                    <input type="text" id="in-name" required placeholder="Mao" oninput="checkEasterEgg()">
                 </div>
-                <div class="form-cell">
+                <div class="form-cell" id="surname-container">
                     <label>Cognome</label>
-                    <input type="text" id="in-surname" required placeholder="Inserisci il tuo cognome">
+                    <input type="text" id="in-surname" required placeholder="Zedong" oninput="checkEasterEgg()">
                 </div>
                 <div class="form-cell cell-full">
                     <label>Indirizzo E-mail</label>
@@ -501,129 +321,186 @@
                 </div>
                 <div class="form-cell cell-full">
                     <label>Messaggio</label>
-                    <textarea id="in-text" required placeholder="Scrivi qui il tuo testo..."></textarea>
+                    <textarea id="in-text" required placeholder="Scrivi il tuo messaggio..."></textarea>
                 </div>
-                
-                <div class="form-cell cell-full">
-                    <label class="scout-checkbox">
-                        <input type="checkbox" id="in-copy">
-                        <div class="box-blueprint"></div>
-                        <span style="font-size: 13px; font-weight: 500;">Desidero ricevere una copia di questo messaggio sulla mia e-mail</span>
-                    </label>
-                </div>
-                
-                <div class="cell-full btn-container">
-                    <button type="submit" class="btn-blueprint">Invia Messaggio</button>
+                <div class="cell-full">
+                    <button type="submit" class="btn-blueprint">Invia File</button>
                 </div>
             </form>
 
+            <!-- GIOCO TERMINALE COMPLETO -->
             <div id="game-container">
-                <div class="game-status">// TERMINALE ENGINE REBOOT // PREMI SULLA GRIGLIA O SPAZIO PER SALTARE</div>
+                <div id="game-status-text" class="game-status">// STATUS: STANDBY // PREMI SPAZIO O TOCCA IL CANVAS PER INIZIARE</div>
                 <canvas id="game-canvas" width="600" height="150"></canvas>
-                <div id="game-score" class="game-status" style="color:var(--text-title)">PUNTEGGIO: 0</div>
-                <button class="btn-blueprint btn-outline" onclick="closeGame()" style="margin-top: 15px; padding: 8px 16px;">Chiudi Modulo</button>
+                <div id="game-score" class="game-status" style="color:var(--text-title); margin-top:10px;">PUNTEGGIO: 0</div>
+                <button class="btn-blueprint" onclick="closeGame()" style="margin-top: 15px; background: #ff7a45; color:#fff; font-size:10px; padding: 10px 20px;">Chiudi Modulo (Esci)</button>
             </div>
-            
-            <div class="btn-home-back">
-                <button class="btn-blueprint btn-outline" onclick="navigate('home')">
-                    <svg class="icon-svg"><use href="#i-index"/></svg> Torna alla Home
-                </button>
+
+            <div class="btn-home-back"><button class="btn-blueprint btn-outline" onclick="navigate('home')">Torna alla Home</button></div>
+        </section>
+
+        <!-- CONSOLE AMMINISTRATORE -->
+        <section id="admin" class="document-block">
+            <div class="block-id">SECURE_NODE // ROOT_ACCESS</div>
+            <h1>Console Analytics & Gestione Flussi</h1>
+            <div class="analytics-grid">
+                <div class="metric-card"><div><label>Richieste Canale</label></div><div class="metric-value" id="count-views">1.240</div></div>
+                <div class="metric-card"><div><label>Download Copione</label></div><div class="metric-value" id="count-downloads">42</div></div>
+                <div class="metric-card"><div><label>Tempo Risposta Proxy</label></div><div class="metric-value" style="color:#28a745;">12ms</div></div>
             </div>
+            <div class="terminal-box">
+                <div class="terminal-header">TERMINAL TRANSMITTER // COMPILER_v2.6</div>
+                <form onsubmit="publishAnnouncement(event)">
+                    <div class="form-grid" style="margin-top:0;">
+                        <div class="form-cell cell-full"><label style="color:#fff;">Titolo</label><input type="text" id="adm-title" required style="background:#1c2025; color:#fff;"></div>
+                        <div class="form-cell">
+                            <label style="color:#fff;">Categoria</label>
+                            <select id="adm-type" style="background:#1c2025; color:#fff;"><option value="tech-alert">Importante</option><option value="standard">Standard</option></select>
+                        </div>
+                        <div class="form-cell"><label style="color:#fff;">Firma</label><input type="text" id="adm-sign" value="F.A. CARUSO" required style="background:#1c2025; color:#fff;"></div>
+                        <div class="form-cell cell-full"><label style="color:#fff;">Corpo</label><textarea id="adm-body" required style="background:#1c2025; color:#fff;"></textarea></div>
+                        <div class="cell-full"><button type="submit" class="btn-blueprint" style="background:var(--accent-tech); color:#fff;">Inietta Annuncio</button></div>
+                    </div>
+                </form>
+            </div>
+            <div class="btn-home-back"><button class="btn-blueprint btn-outline" onclick="navigate('home')">Esci dalla Console</button></div>
         </section>
     </main>
 
-    <footer>
-        <div>
-            REGISTRO REGIONALE // AREA: TREVISO // © 2026 FRANCESCO A. CARUSO // CONTATTO ISTITUZIONALE: <a href="mailto:progettoautentico.francescocaruso@outlook.com">progettoautentico.francescocaruso@outlook.com</a>
-        </div>
-    </footer>
+    <footer><div>REGISTRO REGIONALE // AREA: TREVISO // © 2026 FRANCESCO A. CARUSO</div></footer>
 
     <script>
         let isTransitioning = false;
+        let isAdminUnlocked = false;
+        let systemAnnouncements = [{ date: "09/06/2026", sign: "MAIN_NODE", title: "Attivazione Server di Visualizzazione Unificato", body: "Tutti i flussi multimediali e i documenti in formato A4 sono ora visualizzabili nativamente.", type: "tech-alert" }];
 
         function navigate(tabId) {
             if (isTransitioning) return;
-            
             const currentBlock = document.querySelector('.document-block.active');
             const nextBlock = document.getElementById(tabId);
-            
             if (currentBlock === nextBlock) return;
             isTransitioning = true;
-
             const bar = document.getElementById('loading-bar');
             bar.style.animation = 'networkFlash 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-
             document.querySelectorAll('nav ul li a').forEach(a => a.classList.remove('active'));
             const activeMenuLink = document.getElementById('m-' + tabId);
             if (activeMenuLink) activeMenuLink.classList.add('active');
-
             if (currentBlock) {
+                if (currentBlock.id === 'video') pauseProjectVideo();
                 currentBlock.classList.add('leaving');
-                
                 setTimeout(() => {
                     currentBlock.classList.remove('active', 'leaving');
                     nextBlock.classList.add('active');
                     window.scrollTo({top: 0});
-                    
-                    setTimeout(() => {
-                        bar.style.animation = 'none';
-                        isTransitioning = false;
-                    }, 150);
+                    setTimeout(() => { bar.style.animation = 'none'; isTransitioning = false; }, 150);
                 }, 300);
-            } else {
-                nextBlock.classList.add('active');
-                isTransitioning = false;
+            } else { nextBlock.classList.add('active'); isTransitioning = false; }
+        }
+
+        function pauseProjectVideo() {
+            const videoFrame = document.getElementById('project-video');
+            if (videoFrame) videoFrame.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        }
+
+        function triggerAdminAccess() {
+            if (isAdminUnlocked) { navigate('admin'); return; }
+            const pass = prompt("INSERIRE CHIAVE CRITTOGRAFICA DI ACCESSO:");
+            if (pass === "1234") {
+                isAdminUnlocked = true;
+                const adminMenu = document.getElementById('m-admin');
+                adminMenu.classList.add('unlocked');
+                adminMenu.innerHTML = `<svg class="icon-svg"><use href="#i-lock"/></svg>Console (Attiva)`;
+                navigate('admin');
             }
         }
 
-        function sendForm(event) {
-            event.preventDefault();
-            const nome = document.getElementById('in-name').value;
-            alert(`Messaggio registrato correttamente. Grazie per il riscontro, ${nome}.`);
-            event.target.reset();
+        function renderAnnouncements() {
+            const bachecaTarget = document.getElementById('bacheca-target');
+            const homeTarget = document.getElementById('home-announcement-target');
+            if(!bachecaTarget) return; bachecaTarget.innerHTML = "";
+            for (let i = systemAnnouncements.length - 1; i >= 0; i--) {
+                const ann = systemAnnouncements[i];
+                const card = document.createElement('div'); card.className = `announcement-card ${ann.type}`;
+                card.innerHTML = `<div class="announcement-meta">DATA: ${ann.date} // ADM_REF: ${ann.sign}</div><div class="announcement-title">${ann.title}</div><p style="margin: 0; font-size: 14px;">${ann.body}</p>`;
+                bachecaTarget.appendChild(card);
+            }
+            const latest = systemAnnouncements[systemAnnouncements.length - 1];
+            if (latest && homeTarget) {
+                homeTarget.innerHTML = `<div class="announcement-card ${latest.type}" style="margin-top:10px;"><div class="announcement-meta">DATA: ${latest.date} // ULTIMO RILASCIO</div><div class="announcement-title">${latest.title}</div><p style="margin: 0; font-size: 14px;">${latest.body}</p></div>`;
+            }
         }
 
-        /* --- LOGICA DI GIOCO INTERNA (EASTER EGG) --- */
+        function publishAnnouncement(event) {
+            event.preventDefault();
+            systemAnnouncements.push({ date: "09/06/2026", sign: document.getElementById('adm-sign').value.toUpperCase(), title: document.getElementById('adm-title').value, body: document.getElementById('adm-body').value, type: document.getElementById('adm-type').value });
+            renderAnnouncements(); navigate('annunci');
+        }
+
+        function sendForm(event) { event.preventDefault(); alert("Messaggio inviato al terminale."); event.target.reset(); }
+
+        /* --- MOTORE DI GIOCO AVANZATO CON CONTROLLO STRINGA "MAO ZEDONG" --- */
         let gameLoopInterval;
-        let isPlaying = false;
-        
-        function checkEasterEgg(val) {
-            if(val === "Mao Zedong") {
-                document.querySelector('.form-grid').style.display = 'none';
+        let isEngineActive = false; 
+        let hasGameStarted = false;  
+
+        function checkEasterEgg() {
+            const nameVal = document.getElementById('in-name').value.trim();
+            const surnameVal = document.getElementById('in-surname').value.trim();
+            
+            const matchInsieme = (nameVal.toLowerCase() === "mao" && surnameVal.toLowerCase() === "zedong");
+
+            if(matchInsieme && !isEngineActive) {
+                isEngineActive = true;
+                document.body.classList.add('terminal-mode'); 
+                document.getElementById('main-contact-form').style.display = 'none';
                 document.getElementById('game-container').style.display = 'block';
-                initGame();
+                setupEngine();
             }
         }
 
         function closeGame() {
-            document.getElementById('game-container').style.display = 'none';
-            document.querySelector('.form-grid').style.display = 'grid';
-            document.getElementById('in-name').value = '';
             clearInterval(gameLoopInterval);
-            isPlaying = false;
+            isEngineActive = false;
+            hasGameStarted = false;
+            document.body.classList.remove('terminal-mode'); 
+            document.getElementById('game-container').style.display = 'none';
+            document.getElementById('main-contact-form').style.display = 'grid';
+            document.getElementById('in-name').value = '';
+            document.getElementById('in-surname').value = '';
+            document.getElementById('game-score').innerText = `PUNTEGGIO: 0`;
         }
 
-        function initGame() {
+        function setupEngine() {
             const canvas = document.getElementById('game-canvas');
             const ctx = canvas.getContext('2d');
+            const statusText = document.getElementById('game-status-text');
             
             let score = 0;
-            let playerY = 0;
+            let playerY = 0; // Distanza dal suolo (0 = a terra, valori negativi = in aria)
             let playerVelocity = 0;
             let isJumping = false;
             let obstacles = [];
             let gameSpeed = 4;
-            isPlaying = true;
 
-            function jump() {
+            const baseWidth = 25;
+            const baseHeight = 30;
+            const playerX = 40; // Posizione X fissa dell'omino
+
+            statusText.innerText = "// STATUS: STANDBY // PREMI SPAZIO O FARE CLICK PER AVVIARE IL SISTEMA";
+
+            function triggerJump() {
+                if (!hasGameStarted) {
+                    hasGameStarted = true;
+                    statusText.innerText = "// ENGINE STATUS: RUNNING // EVITA LE COLLISIONI DI RETE";
+                }
                 if (!isJumping) {
                     playerVelocity = -10;
                     isJumping = true;
                 }
             }
 
-            window.onkeydown = function(e) { if(e.code === "Space" && isPlaying) { e.preventDefault(); jump(); } };
-            canvas.onclick = function() { if(isPlaying) jump(); };
+            window.onkeydown = function(e) { if(e.code === "Space" && isEngineActive) { e.preventDefault(); triggerJump(); } };
+            canvas.onclick = function() { if(isEngineActive) triggerJump(); };
 
             obstacles = [{ x: 600, width: 15, height: 30 }];
 
@@ -631,46 +508,81 @@
             gameLoopInterval = setInterval(() => {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                ctx.strokeStyle = '#212529';
+                // Disegna la linea del terreno
+                ctx.strokeStyle = document.body.classList.contains('terminal-mode') ? '#33ff33' : '#212529';
                 ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.moveTo(0, 130);
-                ctx.lineTo(600, 130);
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, 130); ctx.lineTo(600, 130); ctx.stroke();
 
-                playerVelocity += 0.5;
-                playerY += playerVelocity;
-                if (playerY >= 0) {
-                    playerY = 0;
-                    playerVelocity = 0;
-                    isJumping = false;
-                }
-
-                ctx.fillStyle = '#e65f2b';
-                ctx.fillRect(40, 100 + playerY, 25, 30);
-
-                obstacles.forEach(obs => {
-                    obs.x -= gameSpeed;
-                    ctx.fillStyle = '#212529';
-                    ctx.fillRect(obs.x, 130 - obs.height, obs.width, obs.height);
-
-                    if (obs.x < 65 && obs.x + obs.width > 40 && (100 + playerY + 30) > (130 - obs.height)) {
-                        score = 0;
-                        obs.x = 600;
-                        gameSpeed = 4;
+                if (hasGameStarted) {
+                    // Gravità e movimento verticale dell'omino
+                    playerVelocity += 0.5;
+                    playerY += playerVelocity;
+                    if (playerY >= 0) {
+                        playerY = 0;
+                        playerVelocity = 0;
+                        isJumping = false;
                     }
-                });
 
-                if (obstacles[0].x < -20) {
-                    obstacles[0].x = 600 + Math.random() * 200;
-                    obstacles[0].height = 20 + Math.random() * 25;
-                    score++;
-                    gameSpeed += 0.2;
-                    document.getElementById('game-score').innerText = `PUNTEGGIO: ${score}`;
+                    // Calcolo esatto dei bordi dell'omino per le collisioni
+                    let currentY = 130 - baseHeight + playerY;
+
+                    obstacles.forEach(obs => {
+                        obs.x -= gameSpeed;
+                        ctx.fillStyle = document.body.classList.contains('terminal-mode') ? '#33ff33' : '#212529';
+                        ctx.fillRect(obs.x, 130 - obs.height, obs.width, obs.height);
+
+                        // FORMULA DI COLLISIONE CORRETTA (AABB standard su Canvas)
+                        if (
+                            obs.x < (playerX + baseWidth) && 
+                            (obs.x + obs.width) > playerX && 
+                            (130 - obs.height) < (currentY + baseHeight) && 
+                            130 > currentY
+                        ) {
+                            // Crash! Reset parametri di gioco
+                            score = 0;
+                            obs.x = 600;
+                            gameSpeed = 4;
+                            hasGameStarted = false; 
+                            statusText.innerText = "// CRASH RILEVATO // RI-PREMI SPAZIO PER REBOOT";
+                            document.getElementById('game-score').innerText = `PUNTEGGIO: ${score}`;
+                        }
+                    });
+
+                    // Generazione ciclica degli ostacoli
+                    if (obstacles[0].x < -20) {
+                        obstacles[0].x = 600 + Math.random() * 200;
+                        obstacles[0].height = 20 + Math.random() * 25;
+                        score++;
+                        gameSpeed += 0.2;
+                        document.getElementById('game-score').innerText = `PUNTEGGIO: ${score}`;
+                    }
                 }
+
+                // Gestione schiacciamento visivo dinamico dell'omino durante il salto
+                let currentWidth = baseWidth;
+                let currentHeight = baseHeight;
+
+                if (hasGameStarted) {
+                    if (playerVelocity < 0) { 
+                        currentWidth = baseWidth * 0.85;
+                        currentHeight = baseHeight * 1.15;
+                    } else if (playerVelocity > 0) { 
+                        currentWidth = baseWidth * 0.92;
+                        currentHeight = baseHeight * 1.08;
+                    }
+                }
+
+                let drawX = playerX + (baseWidth - currentWidth) / 2;
+                let drawY = (130 - currentHeight) + playerY;
+
+                // Disegna l'omino (cubo tecnologico arancione)
+                ctx.fillStyle = '#e65f2b';
+                ctx.fillRect(drawX, drawY, currentWidth, currentHeight);
 
             }, 1000 / 60);
         }
+
+        window.onload = function() { renderAnnouncements(); };
     </script>
 </body>
 </html>
