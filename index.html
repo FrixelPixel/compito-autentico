@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workspace Didattico - Francesco A. Caruso</title>
+    <title>Compito Autentico - Francesco A. Caruso</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -29,7 +29,7 @@
 
     <header>
         <div class="max-w-6xl mx-auto flex justify-between items-center px-6">
-            <div class="font-bold uppercase tracking-widest hover:text-orange-600 transition">F.A. CARUSO // NODE_01</div>
+            <div class="font-bold uppercase tracking-widest hover:text-orange-600 transition">F.A. CARUSO // C_AUT_01</div>
             <nav><ul>
                 <li><a onclick="navigate('home')" id="m-home" class="active">Home</a></li>
                 <li><a onclick="navigate('annunci')" id="m-annunci">Bacheca</a></li>
@@ -43,7 +43,7 @@
 
     <main class="animate-fade-in">
         <section id="home" class="document-block active">
-            <h1 class="text-3xl font-bold mb-6">Benvenuto nel Workspace</h1>
+            <h1 class="text-3xl font-bold mb-6">Benvenuto nella pagina dedicata al mio Compito Autentico</h1>
             <div class="mb-8">
                 <h2 class="text-sm uppercase font-bold tracking-widest mb-2 text-gray-500">Leggi l'ultimo annuncio:</h2>
                 <div id="home-latest" onclick="navigate('annunci')" class="cursor-pointer hover:bg-orange-100 transition p-6 border-l-4 border-orange-500 bg-orange-50 italic hover:scale-[1.01] duration-300">Caricamento...</div>
@@ -56,19 +56,18 @@
         </section>
 
         <section id="annunci" class="document-block"><h1 class="text-2xl font-bold mb-4">Bacheca</h1><div id="bacheca-target" class="space-y-4"></div></section>
-        <section id="video" class="document-block"><h1 class="text-2xl font-bold">Video</h1><div class="media-dock"><iframe src="https://drive.google.com/file/d/1dbOHXZdpCAcC4LC7cT8Oi_pBQoLWsvPa/preview"></iframe></div><button onclick="downloadResource('video', 'https://drive.google.com/uc?export=download&id=1dbOHXZdpCAcC4LC7cT8Oi_pBQoLWsvPa')" class="btn-blueprint">Scarica Video</button></section>
+        <section id="video" class="document-block"><h1 class="text-2xl font-bold">Video</h1><div class="media-dock"><iframe src="https://drive.google.com/file/d/1dbOHXZdpCAcC4LC7cT8Oi_pBQoLWsvPa/preview"></iframe>
         
         <section id="powerpoint" class="document-block">
             <h1 class="text-2xl font-bold mb-4">Slides</h1>
             <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform;">
                 <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;" src="https://www.canva.com/design/DAHKNSf_bH0/pzAIoM7n_RsgoRp5Bmjl6g/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
             </div>
-            <button onclick="downloadResource('slides', 'https://drive.google.com/uc?export=download&id=1mr6TzeUL1gl80cYOzUZwlCozXcrSW9B3')" class="btn-blueprint mt-4">Scarica PDF</button>
         </section>
 
-        <section id="copione" class="document-block"><h1 class="text-2xl font-bold">Copione</h1><div class="a4-dock"><iframe src="https://drive.google.com/file/d/1XJTZGjGoaXYFHPeYYotkyiB_WyrRLFj9/preview"></iframe></div><button onclick="downloadResource('copione', 'https://drive.google.com/uc?export=download&id=1XJTZGjGoaXYFHPeYYotkyiB_WyrRLFj9')" class="btn-blueprint mt-4">Scarica PDF</button></section>
+        <section id="copione" class="document-block"><h1 class="text-2xl font-bold">Copione</h1><div class="a4-dock"><iframe src="https://drive.google.com/file/d/1XJTZGjGoaXYFHPeYYotkyiB_WyrRLFj9/preview"></iframe>
         
-        <section id="contatti" class="document-block">
+        <section id="contattami" class="document-block">
             <h1 class="text-2xl font-bold mb-4">Contattami</h1>
             <form id="contact-form" onsubmit="sendForm(event)" class="space-y-4">
                 <div class="grid grid-cols-2 gap-4">
