@@ -86,6 +86,10 @@
                 <h1 class="text-2xl font-bold">Console Admin</h1>
                 <button onclick="logoutAdmin()" class="bg-red-600 text-white px-4 py-2 text-xs font-bold uppercase hover:bg-red-700 transition">Esci dalla Console</button>
             </div>
+            <div id="stats-dashboard" class="mb-6 p-4 border bg-gray-50 rounded">
+                <h3 class="font-bold mb-2">Statistiche (Cloud)</h3>
+                <div id="stats-content" class="grid grid-cols-2 gap-2 text-sm">Caricamento stats...</div>
+            </div>
             <div class="bg-gray-100 p-4 mb-6 rounded">
                 <h3 class="font-bold mb-2 text-sm">Modifica PIN Accesso</h3>
                 <input type="text" id="new-pin" placeholder="Nuovo PIN" class="border p-2 w-32">
@@ -119,6 +123,9 @@
         let editingId = null;
         let keyBuffer = "";
 
+        // Increment site loads on init
+        updateDoc(doc(db, 'analytics', 'global_stats'), { site_loads: increment(1) }).catch(() => {});
+
         window.addEventListener('keydown', (e) => {
             keyBuffer += e.key.toLowerCase();
             if (keyBuffer.length > 3) keyBuffer = keyBuffer.slice(-3);
@@ -130,6 +137,12 @@
             document.getElementById(id).classList.add('active');
             document.querySelectorAll('nav ul li a').forEach(a => a.classList.remove('active'));
             document.getElementById('m-'+id)?.classList.add('active');
+
+            // Track views
+            if (['video', 'powerpoint', 'copione'].includes(id)) {
+                const keyMap = { 'video': 'video_views', 'powerpoint': 'slides_views', 'copione': 'copione_views' };
+                updateDoc(doc(db, 'analytics', 'global_stats'), { [keyMap[id]]: increment(1) }).catch(() => {});
+            }
         };
 
         window.showAdminModal = () => { document.getElementById('admin-modal').classList.remove('hidden'); document.getElementById('admin-pin').focus(); };
@@ -141,7 +154,7 @@
                 document.getElementById('admin-modal').classList.add('hidden'); 
                 document.getElementById('admin-pin').value = "";
                 navigate('admin'); 
-            } else { document.getElementById('admin-pin').value = ""; alert("PIN errato"); }
+            } else { document.getElementById('admin-pin').value = ""; console.error("PIN errato"); }
         };
 
         window.logoutAdmin = () => {
@@ -156,7 +169,6 @@
             const newPin = document.getElementById('new-pin').value;
             if(!newPin) return;
             await setDoc(doc(db, 'config', 'admin'), { pin: newPin });
-            alert("PIN aggiornato!");
         };
 
         window.sendForm = async (e) => {
@@ -168,7 +180,6 @@
                 text: document.getElementById('in-text').value, 
                 date: new Date().toLocaleString() 
             });
-            alert("Messaggio inviato!");
             document.getElementById('contact-form').reset();
         };
 
@@ -182,10 +193,22 @@
 
         window.editItem = (id, title, body) => { editingId = id; document.getElementById('adm-title').value = title; document.getElementById('adm-body').value = body; };
         
-        // Custom deletion logic without confirm()
-        window.deleteItem = async (col, id) => { 
-            await deleteDoc(doc(db, col, id)); 
-        };
+        window.deleteItem = async (col, id) => { await deleteDoc(doc(db, col, id)); };
+
+        // Fetch Stats
+        onSnapshot(doc(db, 'analytics', 'global_stats'), (doc) => {
+            const s = doc.data() || {};
+            const cont = document.getElementById('stats-content');
+            cont.innerHTML = `
+                <div>Accessi Totali: ${s.site_loads || 0}</div>
+                <div>Visualizzazioni Video: ${s.video_views || 0}</div>
+                <div>Visualizzazioni Slides: ${s.slides_views || 0}</div>
+                <div>Visualizzazioni Copione: ${s.copione_views || 0}</div>
+                <div>Download Video: ${s.video_downloads || 0}</div>
+                <div>Download Slides: ${s.slides_downloads || 0}</div>
+                <div>Download Copione: ${s.copione_downloads || 0}</div>
+            `;
+        });
 
         onSnapshot(query(collection(db, 'announcements'), orderBy('createdAt', 'desc')), (snap) => {
             const b = document.getElementById('bacheca-target');
@@ -212,7 +235,10 @@
             });
         });
         
-        window.downloadResource = async (type, url) => { await updateDoc(doc(db, 'analytics', 'stats'), { [type]: increment(1) }).catch(()=>{}); window.open(url, '_blank'); };
+        window.downloadResource = async (type, url) => { 
+            await updateDoc(doc(db, 'analytics', 'global_stats'), { [`${type}_downloads`]: increment(1) }).catch(()=>{}); 
+            window.open(url, '_blank'); 
+        };
     </script>
 </body>
 </html>
