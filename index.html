@@ -56,17 +56,35 @@
         </section>
 
         <section id="annunci" class="document-block"><h1 class="text-2xl font-bold mb-4">Bacheca</h1><div id="bacheca-target" class="space-y-4"></div></section>
-        <section id="video" class="document-block"><h1 class="text-2xl font-bold">Video</h1><div class="media-dock"><iframe src="https://drive.google.com/file/d/1dbOHXZdpCAcC4LC7cT8Oi_pBQoLWsvPa/preview"></iframe></div><button onclick="downloadResource('video', 'https://drive.google.com/uc?export=download&id=1dbOHXZdpCAcC4LC7cT8Oi_pBQoLWsvPa')" class="btn-blueprint">Scarica Video</button></section>
-        
-        <section id="powerpoint" class="document-block">
-            <h1 class="text-2xl font-bold mb-4">Slides</h1>
-            <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform;">
-                <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;" src="https://www.canva.com/design/DAHKNSf_bH0/pzAIoM7n_RsgoRp5Bmjl6g/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
-            </div>
-            <button onclick="downloadResource('slides', 'https://drive.google.com/uc?export=download&id=1mr6TzeUL1gl80cYOzUZwlCozXcrSW9B3')" class="btn-blueprint mt-4">Scarica PDF</button>
-        </section>
+        <section id="video" class="document-block">
+    <h1 class="text-2xl font-bold">Video</h1>
+    <div class="media-dock">
+        <iframe src="https://drive.google.com/file/d/1dbOHXZdpCAcC4LC7cT8Oi_pBQoLWsvPa/preview"></iframe>
+    </div>
+    <a href="https://drive.google.com/uc?export=download&id=1dbOHXZdpCAcC4LC7cT8Oi_pBQoLWsvPa" 
+       target="_blank" 
+       class="btn-blueprint">Scarica Video</a>
+</section>
 
-        <section id="copione" class="document-block"><h1 class="text-2xl font-bold">Copione</h1><div class="a4-dock"><iframe src="https://drive.google.com/file/d/1XJTZGjGoaXYFHPeYYotkyiB_WyrRLFj9/preview"></iframe></div><button onclick="downloadResource('copione', 'https://drive.google.com/uc?export=download&id=1XJTZGjGoaXYFHPeYYotkyiB_WyrRLFj9')" class="btn-blueprint mt-4">Scarica PDF</button></section>
+<section id="powerpoint" class="document-block">
+    <h1 class="text-2xl font-bold mb-4">Slides</h1>
+    <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform;">
+        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;" src="https://www.canva.com/design/DAHKNSf_bH0/pzAIoM7n_RsgoRp5Bmjl6g/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+    </div>
+    <a href="https://drive.google.com/uc?export=download&id=1mr6TzeUL1gl80cYOzUZwlCozXcrSW9B3" 
+       target="_blank" 
+       class="btn-blueprint mt-4">Scarica PDF</a>
+</section>
+
+<section id="copione" class="document-block">
+    <h1 class="text-2xl font-bold">Copione</h1>
+    <div class="a4-dock">
+        <iframe src="https://drive.google.com/file/d/1XJTZGjGoaXYFHPeYYotkyiB_WyrRLFj9/preview"></iframe>
+    </div>
+    <a href="https://drive.google.com/uc?export=download&id=1XJTZGjGoaXYFHPeYYotkyiB_WyrRLFj9" 
+       target="_blank" 
+       class="btn-blueprint mt-4">Scarica PDF</a>
+</section>
         
         <section id="contatti" class="document-block">
             <h1 class="text-2xl font-bold mb-4">Contattami</h1>
@@ -243,16 +261,5 @@
     </script>
     <section id="copione" class="document-block">
         </section>
-
-    <script>
-    function downloadResource(nome, url) {
-        const link = document.createElement('a');
-        link.href = url;
-        link.target = '_blank';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-    </script>
 </body>
 </html>
